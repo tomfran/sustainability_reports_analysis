@@ -1,0 +1,8 @@
+{
+  "atoka_id": 208,
+  "name": 208,
+  "full_address": 175,
+  "ateco_code": 175,
+  "revenue": 141,
+  "employees": 160
+}
