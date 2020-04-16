@@ -2,11 +2,11 @@
 Contants variables used in the project
 """
 # pdf files location
-PDF_DIRECTORY   = "data/pdf/"
+PDF_DIRECTORY   = "pdf_ocr/data/pdf/"
 # images and paragraphs save location
-IMAGES_PATH     = "data/images/"
+IMAGES_PATH     = "pdf_ocr/data/images/"
 # text save location
-TEXTS_PATH      = "data/converted/"
+TEXTS_PATH      = "pdf_ocr/data/converted/"
 # dilate iterations     (ADAPT FOR EVERY RESOLUTION ???)
 IMAGE_PROC_ITERATIONS   = 7
 # saved images DPI setting

@@ -10,7 +10,11 @@ def listprint(ll):
     """
     ret = '"['
     for l in ll:
-        ret += '""%s"",'%(l)
+        ret += '{'
+        for k, v in l.items():
+            ret += '""%s"":""%s"",'%(k,v)
+        ret = ret[:-1]
+        ret += '},'
     ret = ret[:-1]
     ret += ']"'
     return ret
