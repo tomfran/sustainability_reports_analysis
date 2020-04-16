@@ -5,7 +5,7 @@ ELASTIC_QUERY_URL = "localhost:9200/sustainability_reports_2018/_search"
 INDEX_NAME = "sustainability_reports_2018"
 
 # paths
-PDFS_PATH = 'data'
+PDFS_PATH = 'pdf_ocr/data/converted'
 
 # dandelion contants
 DANDELION_URL = "https://api.dandelion.eu/datatxt/nex/v1"

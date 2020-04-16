@@ -55,15 +55,15 @@ def evaluate(link):
 
     year = int("2018" in filename) + int("2018" in url) + int("2018" in anchor)
     
-    # # delete not 18 cases checking filename
-    # if re.match(r'(.*)20[0-2]([0-7]|[9])(.*)', filename) and not re.match(r'(.*)18(.*)', filename):
-    #     score = 0
+    # delete not 18 cases checking filename
+    if re.match(r'(.*)20[0-2]([0-7]|[9])(.*)', filename) and not re.match(r'(.*)18(.*)', filename):
+        score = 0
 
-    # return score >= EVALUATION_THRESHOLD and year > 0, score, year
+    return score >= EVALUATION_THRESHOLD and year > 0, score, year
     # return score >= EVALUATION_THRESHOLD and "2018" in filename, score, year
     # return score >= EVALUATION_THRESHOLD and ("2018" in anchor), score, year
     # return score >= EVALUATION_THRESHOLD and ("2018" in filename or "2018" in anchor), score, year
-    return score >= EVALUATION_THRESHOLD , score, 0
+    # return score >= EVALUATION_THRESHOLD , score, 0
 
 def get_depth(l):
     """

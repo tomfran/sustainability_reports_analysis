@@ -15,7 +15,9 @@ def download(links_path, path, limit = -1):
         links_path {string} -- Path to link list
         path {string} -- Path to download directory
         limit {integer} -- limit to the number of companies to consider
-     """
+
+    """
+
     print("\n\033[1mDownloader\033[0m", end = "\n\n") 
     with open(links_path, 'r') as file:
         reader = csv.reader(file)
@@ -35,10 +37,11 @@ def download(links_path, path, limit = -1):
             except Exception:
                 pass
             ll = eval(row[1])
-            for l in [k['url'] for k in ll]:
-                save_path = "%s/%s/%s" %(path, row[0], l.split('/')[-1])
+            for l in ll:
+                filename = l['url'].split('/')[-1]
+                save_path = "%s/%s/%s" %(path, row[0], filename)
                 try:
-                    wget.download(l, save_path)
+                    wget.download(l['url'], save_path)
                     tot += 1
                 except Exception:
                     err += 1

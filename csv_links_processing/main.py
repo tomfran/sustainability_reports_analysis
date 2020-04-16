@@ -14,6 +14,7 @@ def find_reports(source_path, dest_path, stats_path):
         f.write(s)
     
     print("\n%s\n" %(s.replace(",", ": ")))
+    return rows
 
 if __name__ == "__main__":
     find_reports()

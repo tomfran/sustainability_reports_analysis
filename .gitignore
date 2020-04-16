@@ -4,6 +4,7 @@ downloader/filtered_pdf_links.csv
 csv_links_processing/data
 elasticsearch_population/tokens.txt
 elasticsearch_population/data
+tokens.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
