@@ -1,8 +1,9 @@
 import wget
 import os
 import csv
+import requests 
 
-def download(links_path, path, limit = -1):
+def download(links_path, path, limit = -2):
     """
     Download pdf files from a list of links.
     The list is obtained from the csv_links_processing 
@@ -27,9 +28,8 @@ def download(links_path, path, limit = -1):
         for row in reader:
             if i == limit:
                 break
-
             i+= 1
-            if i == 0: 
+            if i == 0 or i <= 19: 
                 continue
             print("\n\nWebsite number: %d" %i)
             try:
@@ -41,7 +41,8 @@ def download(links_path, path, limit = -1):
                 filename = l['url'].split('/')[-1]
                 save_path = "%s/%s/%s" %(path, row[0], filename)
                 try:
-                    wget.download(l['url'], save_path)
+                    s = wget.download(l['url'], save_path)
+                    print(s)
                     tot += 1
                 except Exception:
                     err += 1
