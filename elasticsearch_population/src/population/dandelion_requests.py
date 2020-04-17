@@ -7,7 +7,7 @@ import json
 import sys
 from ..constants import *
 
-def get_entities(text, token):
+def get_entities(text, token, verbose = False):
     """
     Get entities and top entities in a text using 
     Dandelion API
@@ -25,7 +25,7 @@ def get_entities(text, token):
     req_body = {
         "token" : token,
         "text" : text,
-        "top_entities" : 10
+        "top_entities" : TOP_ENTITIES_NUMBER
     }
 
     try:
@@ -53,6 +53,7 @@ def get_entities(text, token):
         ret["all_entities"] = list(e)
     
     else:
-        print("Can't find entities", file=sys.stderr)
+        if verbose:
+            print("Can't find entities", file=sys.stderr)
     
     return ret

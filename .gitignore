@@ -5,7 +5,9 @@ csv_links_processing/data
 elasticsearch_population/tokens.txt
 elasticsearch_population/data
 tokens.txt
+TODO
 .ipynb_checkpoints
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

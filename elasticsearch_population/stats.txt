@@ -1,8 +1,12 @@
 {
-  "atoka_id": 208,
-  "name": 208,
-  "full_address": 175,
-  "ateco_code": 175,
-  "revenue": 141,
-  "employees": 160
+  "atoka_id": 174,
+  "name": 174,
+  "full_address": 140,
+  "revenue": 112,
+  "employees": 126,
+  "pdf_text": 174,
+  "top_entities": 174,
+  "all_entities": 174,
+  "url": 161,
+  "score": 161
 }

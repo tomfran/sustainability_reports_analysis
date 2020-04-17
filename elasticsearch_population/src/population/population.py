@@ -11,7 +11,7 @@ from .atoka_requests import get_company
 from .dandelion_requests import get_entities
 from .utilities import update_stats
 
-def populate(atoka_token, dandelion_token, score_dict):
+def populate(atoka_token, dandelion_token, score_dict, verbose = False):
     """
     Connect to the elasticsearch instance running at HOSTNAME and PORT_NUMBER 
     defined in constants, and populate an index called INDEX_NAME with the
@@ -29,20 +29,23 @@ def populate(atoka_token, dandelion_token, score_dict):
     for company in sorted(os.listdir(PDFS_PATH)):
         # for each converted pdf in directory
         for converted_pdf in sorted(os.listdir("%s/%s" %(PDFS_PATH, company))):
-            print("\n\033[1m%d. %s\033[0m" % (counter, converted_pdf), end = "\n\n")
-            print("Getting company")
+            if verbose:
+                print("\n\033[1m%d. %s\033[0m" % (counter, converted_pdf), end = "\n\n")
+                print("Getting company")
+                
             d = get_company(company, atoka_token)
             if d:
                 # if a company is matched
                 file_path = "%s/%s/%s" %(PDFS_PATH, company, converted_pdf)
                 with open(file_path) as f:        
-                    print("Getting entities")
+                    if verbose:
+                        print("Getting entities")
+
                     d['pdf_text'] = f.read()
-                    ent = get_entities(d["pdf_text"], dandelion_token)
+                    ent = get_entities(d["pdf_text"], dandelion_token, verbose)
                     if ent:
                         #if entities found
                         d.update(ent)
-                        # d['pdf_text'] = "..."
                         
                         key = "%s_%s" %(company, converted_pdf.replace(".txt", ".pdf"))
                         pdf_info = score_dict.get(key)
@@ -50,18 +53,18 @@ def populate(atoka_token, dandelion_token, score_dict):
                         if pdf_info:
                             d.update(pdf_info)
                         
-                        # print(json.dumps(d, indent=2))
-                        
                         res = es.index(INDEX_NAME, d, doc_type='pdf', id = counter)
-                        print("Success")
-
+                        if verbose:
+                            print("Success")
+                        counter += 1
                         # updating stats count
                         stats = update_stats(stats, d) 
                     else:
-                        print("Error")
+                        if verbose:
+                            print("Error")
             else:
-                print("Error")
-            counter += 1
+                if verbose:
+                    print("Error")
     
     return stats
         

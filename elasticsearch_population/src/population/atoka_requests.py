@@ -6,7 +6,7 @@ import requests
 import sys
 from ..constants import *
 
-def match_company(url, token):
+def match_company(url, token, verbose = False):
     """
     Match a company given the url of one of its websites, 
     using Atoka API
@@ -29,7 +29,8 @@ def match_company(url, token):
     ret = {}
     
     if jd["meta"]["count"] == 0:
-        print("No match for url : %s" %url, file=sys.stderr)
+        if verbose:
+            print("No match for url : %s" %url, file=sys.stderr)
         return ret
 
     items = jd["items"][0]
@@ -41,7 +42,7 @@ def match_company(url, token):
 
     return ret
 
-def get_base_economics(id, token):
+def get_base_economics(id, token, verbose = False):
     """
     Get base and economics info for a company given the id, 
     using Atoka API
@@ -65,7 +66,8 @@ def get_base_economics(id, token):
 
     #if no response
     if jd["meta"]["count"] == 0:
-        print("No base and economics for atoka id: %s" %id, file=sys.stderr)
+        if verbose:
+            print("No base and economics for atoka id: %s" %id, file=sys.stderr)
         return ret
     
     items = jd["items"][0]
@@ -103,8 +105,20 @@ def get_base_economics(id, token):
     
     return ret
     
-def get_company(url, token):
-    d = match_company(url, token)
+def get_company(url, token, verbose = False):
+    """
+    Get company info starting from its websites
+    using Atoka API 
+    
+    Arguments:
+        url {string} -- website url
+        token {string} -- Atoka API token
+    
+    Returns:
+        Dictionary -- Dict that stores all 
+        the gathered information regarding the company.
+    """
+    d = match_company(url, token, verbose)
     if d:
-        d.update(get_base_economics(d["atoka_id"], token))
+        d.update(get_base_economics(d["atoka_id"], token, verbose))
     return d

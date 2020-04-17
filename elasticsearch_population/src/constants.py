@@ -9,6 +9,7 @@ PDFS_PATH = 'pdf_ocr/data/converted'
 
 # dandelion contants
 DANDELION_URL = "https://api.dandelion.eu/datatxt/nex/v1"
+TOP_ENTITIES_NUMBER = 20
 
 # atoka contants
 ATOKA_URL = "https://api.atoka.io/v2/companies"
