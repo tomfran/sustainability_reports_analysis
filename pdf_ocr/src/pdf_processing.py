@@ -30,8 +30,9 @@ def get_images(pdf_file, pdf_dir, verbose = False):
     try:
         os.makedirs(IMAGES_PATH + name_no_ext)
     except OSError:
-        print(DIRECTORY_ERROR)
-        return
+        pass
+        # print(DIRECTORY_ERROR)
+        # return
 
     pdf_path = PDF_DIRECTORY + pdf_dir + "/" + pdf_file
     # actual conversion

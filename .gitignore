@@ -1,10 +1,11 @@
-pdf_ocr/data/*
+pdf_ocr/data
 downloader/pdfs
 downloader/filtered_pdf_links.csv
 csv_links_processing/data
 elasticsearch_population/tokens.txt
 elasticsearch_population/data
 tokens.txt
+.ipynb_checkpoints
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -14,9 +14,6 @@ def autolabel(rects, ax):
                     ha='center', va='bottom')
 
 def main():
-    total_websites = 0
-    total_pdfs = 0
-    
     websites = [[],[]] 
     websites_perc = [[],[]] 
     pdf_links = [[],[]] 

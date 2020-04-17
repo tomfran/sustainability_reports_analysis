@@ -30,7 +30,7 @@ def get_stats(s):
     Returns:
         String in a csv format with the stats and additional percentages
     """
-    return "Total websites,%d\nWebsites who published,%d\n\
+    return "metric,value\nTotal websites,%d\nWebsites who published,%d\n\
 Published percentage,%f\nTotal links,%d\n\
 Probable sustainability pdfs links,%d\n\
 Useful pdfs percentage,%f\nAverage depth,%f\n\

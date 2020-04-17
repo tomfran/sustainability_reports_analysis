@@ -33,7 +33,8 @@ def process(csv_file, verbose):
         pdf_dump = []
         for row in csv_reader:
             counter += 1            
-            print("\r[ ]\tProcessing line %d" %(total), end = '', flush=True)
+            if verbose:
+                print("\r[ ]\tProcessing line %d" %(total), end = '', flush=True)
             #skip first line
             if counter == 0 : continue
             pdf_dump = eval(row[1])
@@ -58,8 +59,9 @@ def process(csv_file, verbose):
             # {"sitename" = pdf list, ...}
             if pdf_dump:
                 ret[row[0]] = [{"url":l['pdfUrl'], "score":l['score']} for l in pdf_dump] 
-
-    print("\r[\033[1m\033[92m✓\033[0m]\tAll lines processed\033[K")
+    
+    if verbose:
+        print("\r[\033[1m\033[92m✓\033[0m]\tAll lines processed\033[K")
     # total websites, useful websites, total links, useful links, avg depth, homelinks num
     stats = (counter, len(ret), total, useful, depth_sum/useful, homelinks)
     return ret, stats

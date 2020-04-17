@@ -10,7 +10,7 @@ def convert(verbose = False):
     # convert into image and then text every pdf file in "data/pdf"
     for pdf_dir in sorted(os.listdir(PDF_DIRECTORY)):
         for pdf_file in sorted(os.listdir(PDF_DIRECTORY + "/" + pdf_dir)):
-            if counter > 105:
+            if counter > 137:
                 # status print
                 if verbose:
                     print("\n\033[1m%d. %s\033[0m" % (counter, pdf_file), end = "\n\n") 
