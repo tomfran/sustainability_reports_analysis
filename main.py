@@ -4,11 +4,11 @@ from pdf_ocr import convert
 from elasticsearch_population import elastic_population, analyze
 import json
 from utilities import get_score_dictionary
-from constants import *
+from utilities.constants import *
 
 def main():
 	# search for sustainability links in csv_links_processing
-	# website_links, stats = find_reports(CSV_SOURCE_PATH, verbose=True)
+	website_links, stats = find_reports(CSV_SOURCE_PATH, verbose=True)
 
 	# save_stats(CSV_EVALUATION_PATH, stats)
 
