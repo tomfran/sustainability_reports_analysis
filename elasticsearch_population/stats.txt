@@ -1,12 +1,13 @@
 {
-  "atoka_id": 174,
-  "name": 174,
-  "full_address": 140,
-  "revenue": 112,
-  "employees": 126,
-  "pdf_text": 174,
-  "top_entities": 174,
-  "all_entities": 174,
-  "url": 161,
-  "score": 161
+  "atoka_id": 173,
+  "name": 173,
+  "full_address": 139,
+  "revenue": 111,
+  "employees": 125,
+  "pdf_text": 173,
+  "top_entities": 173,
+  "all_entities": 173,
+  "url": 173,
+  "score": 173,
+  "total": 173
 }

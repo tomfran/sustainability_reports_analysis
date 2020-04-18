@@ -38,6 +38,10 @@ Probable sustainability pdfs links,%d\n\
 Useful pdfs percentage,%f\nAverage depth,%f\n\
 Pdfs in homepage,%d" %(s[0], s[1], (s[1]/s[0])*100, s[2], s[3], (s[3]/s[2])*100, s[4], s[5])
 
+def save_stats(path, s):
+    with open(path, 'w') as f:
+        f.write(get_stats(s))
+
 def clean_pdf_list(ll):
     #keep only the link and the source (needed to get depth later)
     ret = []
