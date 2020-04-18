@@ -1,3 +1,5 @@
+from urllib.parse import urlparse
+
 def listprint(ll):
     """
     Create a string representing a list in a eval friendly format
@@ -41,10 +43,12 @@ def clean_pdf_list(ll):
     ret = []
     for l in ll:
         k = {}
-        k['pdfUrl'] = l[0]['pdfUrl']
+        u = urlparse(l[0]['pdfUrl'])
+        k['pdfUrl'] = "%s://%s%s" %(u[0], u[1], u[2])
         k['sourcePageUrl'] = l[0]['sourcePageUrl']
         k['score'] = l[1][1]
         ret.append(k)
+
 
     # remove #page= and GET arguments
     for r in ret:
