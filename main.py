@@ -4,8 +4,7 @@ from csv_links_processing import find_reports, save_stats, get_stats
 from utilities import get_score_dictionary
 from downloader import download
 from pdf_ocr import convert
-from elasticsearch_population import elastic_population
-from elasticsearch_analysis import analyze
+from elasticsearch_utilities import elastic_population, analyze
 
 def main():
 	# search for sustainability links in csv_links_processing
