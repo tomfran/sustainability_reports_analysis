@@ -33,9 +33,9 @@ def analyze():
     # print("RESPONSE: %s\n" %json.dumps(res, indent=2))
 
 
-    all_entities_list = [h['_source']['top_entities'] for h in res['hits']['hits']]
+    all_entities_list = [h['_source']['all_entities'] for h in res['hits']['hits']]
     print("Average number of entities found: %d" %mean([len(l) for l in all_entities_list]))
-
+    
     occ = {}
     for ll in all_entities_list:
         for l in ll:
