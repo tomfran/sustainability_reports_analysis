@@ -2,8 +2,7 @@ pdf_ocr/data
 downloader/pdfs
 downloader/filtered_pdf_links.csv
 csv_links_processing/data
-elasticsearch_population/tokens.txt
-elasticsearch_population/data
+elasticsearch_utilities/stats
 tokens.txt
 TODO
 .ipynb_checkpoints

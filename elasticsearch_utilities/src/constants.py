@@ -4,8 +4,13 @@ PORT_NUMBER = 9200
 ELASTIC_QUERY_URL = "localhost:9200/sustainability_reports_2018/_search"
 INDEX_NAME = "sustainability_reports_2018"
 
-# paths
+# paths and csv constants
 PDFS_PATH = 'pdf_ocr/data/converted'
+POPULATION_CSV_PATH = 'elasticsearch_utilities/stats/' 
+ENTITIES_HD = ["entity", "frequency"]
+ATECO_HD = ["code", "frequency"]
+REVENUE_HD = ["revenue", "frequency"]
+
 
 # dandelion contants
 DANDELION_URL = "https://api.dandelion.eu/datatxt/nex/v1"
