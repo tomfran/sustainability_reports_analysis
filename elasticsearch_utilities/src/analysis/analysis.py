@@ -2,57 +2,47 @@ from elasticsearch import Elasticsearch
 import requests
 import json
 from ..constants import *
+from .utilities import *
+from .queries import *
+from .company_filters import *
 from statistics import mean 
 
 def analyze():
     es=Elasticsearch([{'host':HOSTNAME,'port':PORT_NUMBER}])
+
+    ma_entities = get_recurrent_entities(es, match_all_query)
+    path = POPULATION_CSV_PATH + "all/all_entities_frequency.csv"
+    output_csv(path, ma_entities, ENTITIES_HD)
     
-    # query = {
-    #     'query':{
-    #         'bool':{
-    #             'must':[{
-    #                 'match':{
-    #                     "top_entities": "Sustainability"
-    #                 }
-    #             }],
-    #             'filter':[{
-    #                 'match':{
-    #                     "top_entities": "Customer"
-    #                 }
-    #             }]
-    #         }
-    #     }
-    # }
-    query = {
-        "query" : {
-            "match_all" : {}
-        }
-    }
-
-    res = es.search(index=INDEX_NAME, body=query, size=200)
-    # print("RESPONSE: %s\n" %json.dumps(res, indent=2))
-
-
-    all_entities_list = [h['_source']['all_entities'] for h in res['hits']['hits']]
-    print("Average number of entities found: %d" %mean([len(l) for l in all_entities_list]))
+    ma_top_entities = get_recurrent_top_entities(es, match_all_query)
+    path = POPULATION_CSV_PATH + "all/top_entities_frequency.csv"
+    output_csv(path, ma_top_entities, ENTITIES_HD)
     
-    occ = {}
-    for ll in all_entities_list:
-        for l in ll:
-            if l in occ:
-                occ[l] += 1
-            else:
-                occ[l] = 1
-    
-    occ = {k: v for k, v in sorted(occ.items(), key=lambda item: item[1], reverse = True)}
 
-    i = 0
-    for k, v in occ.items():
-        i +=1
-        print ("%s : %d" %(k,v))
-        if i == 10:
-            break
+    ateco_frequency = get_all_ateco(es, match_all_query)
+    path = POPULATION_CSV_PATH + "ateco/ateco_frequency.csv"
+    output_csv(path, ateco_frequency, ATECO_HD)
 
+    for a, v in ateco_frequency.items():
+        q = set_key(match_ateco_query, "ateco", a)
+        ef = get_recurrent_top_entities(es, q)
+        path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "ateco/recurrent_entities/", a)
+        output_csv(path, ef, ENTITIES_HD)
 
+    revenue_frequency = get_all_revenues(es, match_all_query)
+    path = POPULATION_CSV_PATH + "revenue/revenues_frequency.csv"
+    output_csv(path, revenue_frequency, REVENUE_HD)
+
+    SPL_SIZE = 10
+    spl = [k for k,v in revenue_frequency.items()]
+    spl = [(spl[x],spl[min(x+SPL_SIZE, len(spl)-1)]) for x in range(0, len(spl), SPL_SIZE)]
+
+    for s in spl:
+        q = set_key(revenue_range_query, "lte", s[0])
+        q = set_key(revenue_range_query, "gte", s[1])
+        ef = get_recurrent_top_entities(es, q)
+        path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "revenue/recurrent_entities/", s)
+        output_csv(path, ef, ENTITIES_HD)
+        
 if __name__ == "__main__":
     analyze()
