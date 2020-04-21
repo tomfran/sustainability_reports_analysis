@@ -6,7 +6,7 @@ def output_csv(path, dd, headings):
         s = s[:-1] + '\n'
         f.write(s)
         for k, v in dd.items():
-            f.write("%s, %d\n" %(k, v))
+            f.write("%s,%s\n" %(k, v))
 
 def set_key(dd, k, v):
     if isinstance(dd,dict):

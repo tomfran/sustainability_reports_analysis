@@ -44,5 +44,14 @@ def analyze():
         path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "revenue/recurrent_entities/", s)
         output_csv(path, ef, ENTITIES_HD)
         
+
+
+    ie = get_index_entities(es, match_all_query)
+
+    for k, v in ie.items():
+        ie[k] = '"%s"' %" ".join([w.replace(' ', '_').replace(',', '_') for w in v])
+    path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "", "input")
+    output_csv(path, ie, ["elastic_index","entities"])
+
 if __name__ == "__main__":
     analyze()

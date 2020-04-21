@@ -3,6 +3,7 @@ downloader/pdfs
 downloader/filtered_pdf_links.csv
 csv_links_processing/data
 elasticsearch_utilities/stats
+lda_topic_model/data
 tokens.txt
 TODO
 .ipynb_checkpoints
