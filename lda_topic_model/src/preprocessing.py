@@ -13,8 +13,7 @@ def preprocess(path):
     data = data.drop(['elastic_index'], axis = 1)
 
     # lowercase all entities and put in entites_processed
-    data['entities_processed'] = data['entities'].map(lambda x: re.sub('[,\.!?]', '', x))
-    data['entities_processed'] = data['entities_processed'].map(lambda x: x.lower())
+    data['entities_processed'] = data['entities'].map(lambda x: x.lower())
 
     tf_vectorizer = CountVectorizer(stop_words='english')
     dtm_tf = tf_vectorizer.fit_transform(data['entities_processed'])
