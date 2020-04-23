@@ -6,6 +6,7 @@ from .utilities import *
 from .queries import *
 from .company_filters import *
 from statistics import mean 
+from googletrans import Translator
 
 def analyze():
     es=Elasticsearch([{'host':HOSTNAME,'port':PORT_NUMBER}])
@@ -46,12 +47,18 @@ def analyze():
         
 
 
-    ie = get_index_entities(es, match_all_query)
+    # ie = get_index_entities(es, match_all_query)
 
-    for k, v in ie.items():
-        ie[k] = '"%s"' %" ".join([w.replace(' ', '_').replace(',', '_') for w in v])
-    path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "", "input")
-    output_csv(path, ie, ["elastic_index","entities"])
+    # translate_urls = ["translate.google.com", "translate.google.co.kr",
+    #                     "translate.google.at", "translate.google.de",
+    #                     "translate.google.ru", "translate.google.ch",
+    #                     "translate.google.fr", "translate.google.es"]
+    # t = Translator(service_urls=translate_urls)
+    
+    # for k, v in ie.items():
+    #     ie[k] = '"%s"' %" ".join([translate_to_en(t, w.replace(',', '_')) for w in v])
+    # path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "", "input")
+    # output_csv(path, ie, ["elastic_index","entities"])
 
 if __name__ == "__main__":
     analyze()

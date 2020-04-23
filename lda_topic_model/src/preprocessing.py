@@ -15,6 +15,9 @@ def preprocess(path):
     # lowercase all entities and put in entites_processed
     data['entities_processed'] = data['entities'].map(lambda x: x.lower())
 
+    # translate all workd in english??
+    # divide them in languages and fit lda???
+    print(data['entities_processed'].head())
     tf_vectorizer = CountVectorizer(stop_words='english')
     dtm_tf = tf_vectorizer.fit_transform(data['entities_processed'])
 

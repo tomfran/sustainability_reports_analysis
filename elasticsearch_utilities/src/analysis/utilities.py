@@ -16,3 +16,12 @@ def set_key(dd, k, v):
             for d, dv in dd.items():
                 dv = set_key(dv, k, v)
     return dd
+
+def translate_to_en(t, s):
+    if s in td:
+        return td[s]
+    ret = t.translate(s, dest='en').text.replace(" ", "_")
+    print('"%s" : "%s" ,' %(s,ret))
+    return ret
+
+
