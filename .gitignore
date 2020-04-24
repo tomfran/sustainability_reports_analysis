@@ -4,12 +4,12 @@ downloader/filtered_pdf_links.csv
 csv_links_processing/data
 elasticsearch_utilities/stats
 lda_topic_model/data
+links_decision_tree/data
+links_decision_tree/model
 sett
 tokens.txt
 TODO
 .ipynb_checkpoints
-links_decision_tree/data
-links_decision_tree/model
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
