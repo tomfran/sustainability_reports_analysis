@@ -8,7 +8,8 @@ sett
 tokens.txt
 TODO
 .ipynb_checkpoints
-
+links_decision_tree/data
+links_decision_tree/model
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
