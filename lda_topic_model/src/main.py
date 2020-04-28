@@ -1,10 +1,12 @@
-from .preprocessing import preprocess
+from .preprocessing import preprocess, preprocess_freq_count
 from sklearn.decomposition import LatentDirichletAllocation
 import pyLDAvis
 import os
 
 def trainLDA(input_path):
-    dtm_tf, tf_vectorizer = preprocess(input_path)
+    # dtm_tf, tf_vectorizer = preprocess(input_path)
+    dtm_tf, tf_vectorizer = preprocess_freq_count(input_path)
+
     topics = 10
     words = 10
 

@@ -33,10 +33,6 @@ def populate(atoka_token, dandelion_token, score_dict, verbose = False):
                 print("\n\033[1m%d. %s\033[0m" % (counter, converted_pdf), end = "\n\n")
                 print("Getting company")
                 
-            
-            
-            
-
             d = get_company(company, atoka_token)
             if d:
                 # if a company is matched
@@ -50,14 +46,17 @@ def populate(atoka_token, dandelion_token, score_dict, verbose = False):
                     if ent:
                         #if entities found
                         d.update(ent)
-                        
+
                         key = "%s_%s" %(company, converted_pdf.replace(".txt", ".pdf"))
                         pdf_info = score_dict.get(key)
                         
                         if pdf_info:
                             d.update(pdf_info)
                         
-                        res = es.index(INDEX_NAME, d, doc_type='pdf', id = counter)
+                        print("Sending")
+                        res = es.index(INDEX_NAME, d, doc_type='company_sustainability_report', id = counter)
+                        print("DONE")
+                        
                         if verbose:
                             print("Success")
                         counter += 1

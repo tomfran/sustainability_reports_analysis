@@ -8,13 +8,13 @@ from utilities.constants import *
 
 def main():
 	# search for sustainability links in csv_links_processing
-	# website_links, stats = find_reports(CSV_SOURCE_PATH, verbose=True)
+	website_links, stats = find_reports(CSV_SOURCE_PATH, verbose=True)
 
 	# save_stats(CSV_EVALUATION_PATH, stats)
 
 	# # get a dictionary with: website_filename : {score : _ , url: _ }
 	# # it makes population way easier
-	# score_dict = get_score_dictionary(website_links)
+	score_dict = get_score_dictionary(website_links)
 	
 	# # download the useful pdf files found
 	# download(website_links, OCR_PDF_PATH)
@@ -23,13 +23,13 @@ def main():
 	# convert(True)
 
 	# # populate elasticsearch index with converted pdfs 
-	# stats = elastic_population(TOKENS_PATH, score_dict, verbose=True)
+	stats = elastic_population(TOKENS_PATH, score_dict, verbose=True)
 
-	# with open("elasticsearch_utilities/stats/population.csv", 'w') as s:
-	# 	s.write(json.dumps(stats, indent = 2))
+	with open("elasticsearch_utilities/stats/population.csv", 'w') as s:
+		s.write(json.dumps(stats, indent = 2))
 
 	# analyze results elastic
-	analyze()
+	# analyze()
 
 if __name__ == "__main__":
 	main()

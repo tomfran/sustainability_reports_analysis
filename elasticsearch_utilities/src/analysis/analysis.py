@@ -12,17 +12,13 @@ def analyze():
     es=Elasticsearch([{'host':HOSTNAME,'port':PORT_NUMBER}])
 
     ma_entities = get_recurrent_entities(es, match_all_query)
-    path = POPULATION_CSV_PATH + "all/all_entities_frequency.csv"
-    output_csv(path, ma_entities, ENTITIES_HD)
+    output_csv(POPULATION_CSV_PATH + "all/all_entities_frequency.csv", ma_entities, ENTITIES_HD)
     
     ma_top_entities = get_recurrent_top_entities(es, match_all_query)
-    path = POPULATION_CSV_PATH + "all/top_entities_frequency.csv"
-    output_csv(path, ma_top_entities, ENTITIES_HD)
-    
+    output_csv(POPULATION_CSV_PATH + "all/top_entities_frequency.csv", ma_top_entities, ENTITIES_HD)
 
     ateco_frequency = get_all_ateco(es, match_all_query)
-    path = POPULATION_CSV_PATH + "ateco/ateco_frequency.csv"
-    output_csv(path, ateco_frequency, ATECO_HD)
+    output_csv(POPULATION_CSV_PATH + "ateco/ateco_frequency.csv", ateco_frequency, ATECO_HD)
 
     for a, v in ateco_frequency.items():
         q = set_key(match_ateco_query, "ateco", a)
@@ -44,8 +40,6 @@ def analyze():
         ef = get_recurrent_top_entities(es, q)
         path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "revenue/recurrent_entities/", s)
         output_csv(path, ef, ENTITIES_HD)
-        
-
 
     # ie = get_index_entities(es, match_all_query)
 

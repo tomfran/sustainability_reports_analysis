@@ -25,3 +25,4 @@ def translate_to_en(t, s):
     return ret
 
 
+td = {}

@@ -14,7 +14,7 @@ REVENUE_HD = ["revenue", "frequency"]
 
 # dandelion contants
 DANDELION_URL = "https://api.dandelion.eu/datatxt/nex/v1"
-TOP_ENTITIES_NUMBER = 100
+TOP_ENTITIES_NUMBER = 300
 
 # atoka contants
 ATOKA_URL = "https://api.atoka.io/v2/companies"

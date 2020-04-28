@@ -11,11 +11,11 @@ Y = data.label
 
 X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=1)
 
-clf = tree.DecisionTreeClassifier()
+clf = tree.DecisionTreeClassifier(max_depth=3)
 clf = clf.fit(X_train,y_train)
 
 # tree.plot_tree(clf.fit(X_train,y_train)) 
-filename = '"../model/trained_decision_tree.sav'
+filename = '../model/trained_decision_tree.sav'
 joblib.dump(clf, filename)
 
 # load the model from disk
