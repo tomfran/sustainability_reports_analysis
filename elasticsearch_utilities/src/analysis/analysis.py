@@ -6,7 +6,6 @@ from .utilities import *
 from .queries import *
 from .company_filters import *
 from statistics import mean 
-from googletrans import Translator
 
 def analyze():
     es=Elasticsearch([{'host':HOSTNAME,'port':PORT_NUMBER}])
@@ -41,18 +40,21 @@ def analyze():
         path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "revenue/recurrent_entities/", s)
         output_csv(path, ef, ENTITIES_HD)
 
-    # ie = get_index_entities(es, match_all_query)
 
-    # translate_urls = ["translate.google.com", "translate.google.co.kr",
-    #                     "translate.google.at", "translate.google.de",
-    #                     "translate.google.ru", "translate.google.ch",
-    #                     "translate.google.fr", "translate.google.es"]
-    # t = Translator(service_urls=translate_urls)
-    
-    # for k, v in ie.items():
-    #     ie[k] = '"%s"' %" ".join([translate_to_en(t, w.replace(',', '_')) for w in v])
-    # path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "", "input")
-    # output_csv(path, ie, ["elastic_index","entities"])
+
+    ie = get_index_entities(es, match_all_query)
+
+    te = translate_entities(ie)
+    path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "", "input_all_entities_en")
+    output_LDA_input(path, ie)
+
+    for i in range(10,110,10):
+        n = 0  #unused for now
+        m = round(170*i/100)
+        path = "%s%s%s%d.csv" %(POPULATION_CSV_PATH, "", "input_all_entities_en_filtered_", i)
+        output_LDA_input_filtered(path, te, n, m)
+
+
 
 if __name__ == "__main__":
     analyze()
