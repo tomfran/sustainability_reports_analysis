@@ -59,6 +59,7 @@ def output_LDA_input(path, te):
     dd = {}
     for k, v in te.items():
         dd[k] = '"%s"' %" ".join(v)
+        dd[k] = dd[k].replace(',', '')
 
     output_csv(path, dd, ["elastic_index","entities"])
 
@@ -70,14 +71,18 @@ def output_LDA_input_filtered(path, ee, n, m):
 
     freq = {}
     for k, v in ee.items():
+        seen = set()
         for w in v:
-            if w in freq:
-                freq[w] += 1
-            else:
-                freq[w] = 1
+            if w not in seen:
+                if w in freq:
+                    freq[w] += 1
+                else:
+                    freq[w] = 1
+                seen.add(w)
         
     dd = {}
     for k, v in ee.items():
         dd[k] = '"%s"' %" ".join([w for w in v if freq[w] >= m])
-
+        dd[k] = dd[k].replace(',', '')
+        
     output_csv(path, dd, ["elastic_index","entities"])

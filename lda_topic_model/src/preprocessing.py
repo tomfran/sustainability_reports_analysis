@@ -32,17 +32,20 @@ def preprocess_freq_count(path, n):
     # lowercase all entities and put in entites_processed
     data['entities_processed'] = data['entities'].map(lambda x: x.lower())
 
+    
     fd = {}
     for row in data['entities_processed']:
-        for el in row.split(" "):
-            if el in fd:
-                fd[el] += 1
-            else:
-                fd[el] = 1
+        seen = set()
+        for w in row.split(" "):
+            if w not in seen:
+                if w in fd:
+                    fd[w] += 1
+                else:
+                    fd[w] = 1
+                seen.add(w)
 
     data['entities_processed'] = data['entities_processed'].map(lambda x: filter_frequency(x, fd, n))
 
     tf_vectorizer = CountVectorizer(stop_words='english')
     dtm_tf = tf_vectorizer.fit_transform(data['entities_processed'])
-
     return dtm_tf, tf_vectorizer

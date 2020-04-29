@@ -28,7 +28,7 @@ def add_labels(ax, x, y):
     box = ax.get_position()
     ax.set_position([box.x0, box.y0, box.width * 1.8, box.height*1.8])
     for i, v in enumerate(y):
-        ax.text(x[i], v+10, "%d" %v, ha="center")
+        ax.text(x[i], v+50, "%d" %v, ha="center")
 
 def generate_plot(path):
     x, y = get_plot_stats(path)
@@ -36,4 +36,4 @@ def generate_plot(path):
     width = 0.35  # t, he width of the bars
     ax.plot(x, y, 'o')
     add_labels(ax, x, y)
-    plt.ylim([0, y[0] + 30])
+    plt.ylim([0, y[0] + 200])
