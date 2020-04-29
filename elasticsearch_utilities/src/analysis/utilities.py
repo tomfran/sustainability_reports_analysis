@@ -32,21 +32,21 @@ t = Translator(service_urls=translate_urls)
 def translate_to_en(s):
     if s in T_DICT:
         return T_DICT[s]
-
-    ret = s.replace(" ", "_")
-    try:
-        d = detect(s)
-    except Exception as e:
-        d = '...'
+    else:
+        return s.replace(" ", "_")
+    # try:
+    #     d = detect(s)
+    # except Exception as e:
+    #     d = '...'
     
-    if d != 'en':
-        ret = t.translate(s, dest='en').text.replace(" ", "_")
+    # if d != 'en':
+    #     ret = t.translate(s, dest='en').text.replace(" ", "_")
 
-        T_DICT[s] = ret
-        print('"%s" : "%s" ,' %(s,ret))
-        print('"%s" : "%s" ,' %(s,ret), file = sys.stderr)
+    #     T_DICT[s] = ret
+    #     print('"%s" : "%s" ,' %(s,ret))
+    #     print('"%s" : "%s" ,' %(s,ret), file = sys.stderr)
     
-    return ret
+    # return ret
 
 def translate_entities(ie):
     ret = {}
@@ -75,7 +75,7 @@ def output_LDA_input_filtered(path, ee, n, m):
                 freq[w] += 1
             else:
                 freq[w] = 1
-
+        
     dd = {}
     for k, v in ee.items():
         dd[k] = '"%s"' %" ".join([w for w in v if freq[w] >= m])

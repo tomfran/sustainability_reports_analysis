@@ -37,21 +37,29 @@ def get_entities(text, token, verbose = False):
     ret = {}
     
     if "error" not in jd:
-        te = set()
-        e = set()
+
+        occ = {}
         for a in jd["topEntities"]:
-            te.add(a["id"])    
+            i = a["id"]
+            if i in occ:
+                occ[i] += 1
+            else:
+                occ[i] = 1
 
         te_list = []
+        e_list = []
+
         for a in jd["annotations"]:
-            e.add(a["title"])
-            if a["id"] in te:
-                te.remove(a["id"])
+            e_list.append(a["title"])
+            i = a["id"]
+            if occ.get(i):
                 te_list.append(a["title"])
+                occ[i] -= 1
+                if occ[i] == 0:
+                    occ.pop(i)        
 
         ret["top_entities"] = te_list
-        ret["all_entities"] = list(e)
-    
+        ret["all_entities"] = e_list
     else:
         if verbose:
             print("Can't find entities", file=sys.stderr)

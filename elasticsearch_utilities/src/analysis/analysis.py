@@ -40,21 +40,18 @@ def analyze():
         path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "revenue/recurrent_entities/", s)
         output_csv(path, ef, ENTITIES_HD)
 
-
-
     ie = get_index_entities(es, match_all_query)
 
     te = translate_entities(ie)
+
     path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "", "input_all_entities_en")
     output_LDA_input(path, ie)
 
     for i in range(10,110,10):
         n = 0  #unused for now
         m = round(170*i/100)
-        path = "%s%s%s%d.csv" %(POPULATION_CSV_PATH, "", "input_all_entities_en_filtered_", i)
+        path = "%s%s%s%d.csv" %(POPULATION_CSV_PATH, "input_filtered/", "input_all_entities_en_filtered_", i)
         output_LDA_input_filtered(path, te, n, m)
-
-
 
 if __name__ == "__main__":
     analyze()
