@@ -1,2 +1,2 @@
 from .main import elastic_population
-from .src.analysis import analyze
+from .src import analyze, generate_plot
