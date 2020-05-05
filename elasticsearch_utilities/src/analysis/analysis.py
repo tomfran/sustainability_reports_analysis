@@ -42,22 +42,25 @@ def analyze():
 
     ie = get_index_entities(es, match_all_query)
 
+    print(mean([len(v) for k, v in ie.items()]))
+
     top_e = get_index_top_entities(es, match_all_query)
+    print(mean([len(v) for k, v in top_e.items()]))
 
-    te = translate_entities(ie)
-    top_e = translate_entities(top_e)
+    # te = translate_entities(ie)
+    # top_e = translate_entities(top_e)
 
-    path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "", "input_all_entities_en")
-    output_LDA_input(path, te)
+    # path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "", "input_all_entities_en")
+    # output_LDA_input(path, te)
 
-    path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "", "input_top_entities_en")
-    output_LDA_input(path, top_e)
+    # path = "%s%s%s.csv" %(POPULATION_CSV_PATH, "", "input_top_entities_en")
+    # output_LDA_input(path, top_e)
 
-    # for i in range(10,110,10):
-    #     n = 0  #unused for now
-    #     m = round(170*i/100)
-    #     path = "%s%s%s%d.csv" %(POPULATION_CSV_PATH, "input_filtered/", "input_all_entities_en_filtered_", i)
-    #     output_LDA_input_filtered(path, te, n, m)
+    # # for i in range(10,110,10):
+    # #     n = 0  #unused for now
+    # #     m = round(170*i/100)
+    # #     path = "%s%s%s%d.csv" %(POPULATION_CSV_PATH, "input_filtered/", "input_all_entities_en_filtered_", i)
+    # #     output_LDA_input_filtered(path, te, n, m)
 
 if __name__ == "__main__":
     analyze()

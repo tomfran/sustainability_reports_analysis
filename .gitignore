@@ -11,6 +11,7 @@ sett
 tokens.txt
 TODO
 .ipynb_checkpoints
+test.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

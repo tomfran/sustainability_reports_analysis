@@ -23,28 +23,26 @@ def preprocess(path):
 
     return dtm_tf, tf_vectorizer
 
-
-def preprocess_freq_count(path, n):
+def preprocess_freq_count(path, n, m):
     # read csv with index, entities separated by '_'
     data = pd.read_csv(path, error_bad_lines=False, engine="python", quoting=csv.QUOTE_NONE)
     data = data.drop(['elastic_index'], axis = 1)
 
     # lowercase all entities and put in entites_processed
     data['entities_processed'] = data['entities'].map(lambda x: x.lower())
-
     
-    fd = {}
+    fd_all = {}
     for row in data['entities_processed']:
         seen = set()
         for w in row.split(" "):
             if w not in seen:
-                if w in fd:
-                    fd[w] += 1
+                if w in fd_all:
+                    fd_all[w] += 1
                 else:
-                    fd[w] = 1
+                    fd_all[w] = 1
                 seen.add(w)
 
-    data['entities_processed'] = data['entities_processed'].map(lambda x: filter_frequency(x, fd, n))
+    data['entities_processed'] = data['entities_processed'].map(lambda x: filter_frequency(x, fd_all, n, m))
 
     tf_vectorizer = CountVectorizer(stop_words='english')
     dtm_tf = tf_vectorizer.fit_transform(data['entities_processed'])

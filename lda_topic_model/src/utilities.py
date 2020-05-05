@@ -7,11 +7,22 @@ def print_vocab(dd):
             print("...") 
             break
 
-def filter_frequency(s, fd, n):
+def filter_frequency(s, fd, n, m):
+
+    fr = {}
+    for w in s.split(" "):
+        if w in fr:
+            fr[w] += 1
+        else:
+            fr[w] = 1
 
     ret = ""
     for w in s.split(" "):
-        if fd[w] >= n:
-            ret += "%s " %w
-            
+        f1 = fd.get(w)
+        f2 = fr.get(w)
+
+        if f1 and f2:
+            if f1 >= n and f2 >= m:
+                ret += "%s " %w
+
     return ret[:-1]

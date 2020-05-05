@@ -70,7 +70,7 @@ def generate_plot(i, stp):
     b = stp[i][1]
 
     x = np.arange(len(a))  # the label locations
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(8, 4))
     width = 0.35  # the width of the bars
     rects1 = ax.bar(x - width/2, a, width, label='60 thold')
     rects2 = ax.bar(x + width/2, b, width, label='40 thold')
