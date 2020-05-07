@@ -5,6 +5,7 @@ def find_reports(source_path, verbose=False):
         print("\n\033[1mCSV processing\033[0m", end = "\n\n") 
 
     rows, stats = process(source_path, verbose)
+
     # with open(dest_path, "w") as f:
     #     f.write('"domain","pdf_dump"\n')
     #     for k, v in rows.items():
@@ -19,4 +20,3 @@ def find_reports(source_path, verbose=False):
 
 if __name__ == "__main__":
     find_reports()
-

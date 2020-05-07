@@ -12,6 +12,8 @@ tokens.txt
 TODO
 .ipynb_checkpoints
 test.py
+scoredict1
+scoredict2
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

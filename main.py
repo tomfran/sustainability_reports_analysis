@@ -5,6 +5,7 @@ from elasticsearch_utilities import elastic_population, analyze
 import json
 from utilities import get_score_dictionary
 from utilities.constants import *
+import sys
 
 def links():
 	website_links, stats = find_reports(CSV_SOURCE_PATH, verbose=True)
