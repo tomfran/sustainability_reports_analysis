@@ -65,6 +65,9 @@ def evaluate(link):
     # return score >= EVALUATION_THRESHOLD and ("2018" in filename or "2018" in anchor), score, year
     # return score >= EVALUATION_THRESHOLD , score, 0
 
+def evaluate_tree(link, tree):
+    return 0
+
 def get_depth(l):
     """
     Get the depth of a page from a url
