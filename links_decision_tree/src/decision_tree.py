@@ -5,7 +5,17 @@ from sklearn import metrics
 import joblib
 # from .plot import generate_tree_plot
 
-def generate_tree(dataset_path = "../data/dtree_dataset.csv"):
+def generate_tree(dataset_path = "links_decision_tree/data/dtree_dataset.csv", load_name = ""):
+
+    if load_name:
+        try:
+            t = joblib.load(load_name + ".sav")
+            return t
+        except Exception:
+            print("Could not find tree named %s, generating another one" %load_name)
+            pass
+
+
     data = pd.read_csv(dataset_path)
     X = data[data.columns[:-1]]
     Y = data.label
@@ -25,7 +35,7 @@ def generate_tree(dataset_path = "../data/dtree_dataset.csv"):
     ]
 
     # make predictions for all trees, and check the accuracy
-    predictions = [d.predict(X_test) for d['tree'] in dtrees]
+    predictions = [d['tree'].predict(X_test) for d in dtrees]
     scores = [metrics.accuracy_score(y_test, p) for p in predictions]
 
     # add scores to tree list
@@ -37,6 +47,6 @@ def generate_tree(dataset_path = "../data/dtree_dataset.csv"):
     #order the trees based on accuracy and save the first one
     dtrees.sort(key=lambda x : x['score'], reverse = True)
     t = dtrees[0]
-    joblib.dump(t['tree'], "../model/" + t['name']+'.sav')
+    joblib.dump(t['tree'], "links_decision_tree/model/" + t['name']+'.sav')
     
     return t

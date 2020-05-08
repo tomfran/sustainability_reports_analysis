@@ -10,14 +10,19 @@ import sys
 
 def links():
 	#find reports using notebook function
-	website_links, stats = find_reports(CSV_SOURCE_PATH, verbose=True)
-	save_stats(CSV_EVALUATION_PATH, stats)
+	if 0:
+		website_links, stats = find_reports(CSV_SOURCE_PATH, verbose=True)
+		save_stats(CSV_EVALUATION_PATH, stats)
 
 	#find reports using tree and see what happens
-	dt = generate_tree()
+	dt = generate_tree()['tree']
 	w_links_2, stats_2 = find_reports_tree(CSV_SOURCE_PATH, dt, verbose=True)
-	save_stats(CSV_EVALUATION_PATH_TREE, stats)
+	save_stats(CSV_EVALUATION_PATH_TREE, stats_2)
 
+	with open("new_urls.txt", "w") as f:
+		for k, v in w_links_2.items():
+			for l in v:
+				f.write("{}\n{}\n\n".format(l['url'], l['score']))
 	# get a dictionary with: website_filename : {score : _ , url: _ }
 	# it makes population way easier
 	score_dict = get_score_dictionary(website_links)
@@ -43,11 +48,11 @@ def an():
 	analyze()
 
 def main():
-	# w_l, s = links()
+	w_l, s = links()
 	# dwl(w_l)
 	# ocr()
 	# elastic(s)
-	an()
+	# an()
 
 if __name__ == "__main__":
 	main()
