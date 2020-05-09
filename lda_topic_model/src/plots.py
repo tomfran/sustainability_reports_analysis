@@ -21,10 +21,10 @@ def generate_plot(path, en="all"):
     ax.set_title("Vocabulary size")
     ax.set_xlabel('N')
     ax.set_ylabel('M')
-    if en == "top":
-        ax.set_yticks([i for i in range(1,5)])
     ax.set_zlabel('size')
     surf = ax.plot_trisurf(x, y, z, cmap=cm.jet, linewidth=0.7)
     fig.colorbar(surf, shrink=0.4, aspect=5)
     ax.view_init(30, 55)
+    if en == "top":
+        ax.view_init(30, 30)
     plt.show()
