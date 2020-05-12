@@ -5,7 +5,7 @@ from sklearn import metrics
 import joblib
 # from .plot import generate_tree_plot
 
-def generate_tree(dataset_path = "../data/dtree_dataset.csv"):
+def generate_tree(dataset_path = "links_decision_tree/data/dtree_dataset.csv"):
     data = pd.read_csv(dataset_path)
     X = data[data.columns[:-1]]
     Y = data.label

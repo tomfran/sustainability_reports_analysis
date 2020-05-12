@@ -16,7 +16,7 @@ def links():
 	#find reports using tree and see what happens
 	dt = generate_tree()
 	w_links_2, stats_2 = find_reports_tree(CSV_SOURCE_PATH, dt, verbose=True)
-	save_stats(CSV_EVALUATION_PATH_TREE, stats)
+	save_stats(CSV_EVALUATION_PATH_TREE, stats_2)
 
 	# get a dictionary with: website_filename : {score : _ , url: _ }
 	# it makes population way easier
@@ -43,11 +43,11 @@ def an():
 	analyze()
 
 def main():
-	# w_l, s = links()
+	w_l, s = links()
 	# dwl(w_l)
 	# ocr()
 	# elastic(s)
-	an()
+	# an()
 
 if __name__ == "__main__":
 	main()

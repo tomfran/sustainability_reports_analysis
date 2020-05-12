@@ -14,6 +14,7 @@ TODO
 test.py
 scoredict1
 scoredict2
+lda_models
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
