@@ -10,38 +10,9 @@ import sys
 
 def links():
 	#find reports using notebook function
-	if 0:
-		website_links, stats = find_reports(CSV_SOURCE_PATH, verbose=True)
-		save_stats(CSV_EVALUATION_PATH, stats)
-
-	#find reports using tree and see what happens
-
-	# dt = generate_tree()['tree']
-	dt = generate_forest()
-	w_links_2, stats_2 = find_reports_classifier(CSV_SOURCE_PATH, dt, verbose=True)
-	print(get_stats(stats_2))
-	save_stats(CSV_EVALUATION_PATH_FOREST + "20.csv", stats_2)
-
-
-
-		# dt = generate_tree()
-		# k = len(dt)
-		# for t in dt:
-		# 	print(k)
-		# 	w_links_2, stats_2 = find_reports_classifier(CSV_SOURCE_PATH, t['tree'], verbose=True)
-		# 	print(get_stats(stats_2))
-		# 	save_stats(CSV_EVALUATION_PATH_TREE + t["name"] + ".csv", stats_2)
-		# 	k -= 1
-
-	if 0:
-
-		with open("new_urls.txt", "w") as f:
-			for k, v in w_links_2.items():
-				for l in v:
-					f.write("{}\n{}\n\n".format(l['url'], l['score']))
-		# get a dictionary with: website_filename : {score : _ , url: _ }
-		# it makes population way easier
-		score_dict = get_score_dictionary(website_links)
+	website_links, stats = find_reports(CSV_SOURCE_PATH, verbose=True)
+	save_stats(CSV_EVALUATION_PATH, stats)
+	score_dict = get_score_dictionary(website_links)
 
 	return website_links, score_dict
 
