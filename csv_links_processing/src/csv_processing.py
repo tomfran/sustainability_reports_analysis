@@ -67,7 +67,7 @@ def process(csv_file, verbose):
     stats = (counter, len(ret), total, useful, depth_sum/useful, homelinks)
     return ret, stats
 
-def process_tree(csv_file, tree, verbose):
+def process_classifier(csv_file, classifier, verbose):
     ret = {}
     csv.field_size_limit(100000000)
     # set to count websites
@@ -89,7 +89,7 @@ def process_tree(csv_file, tree, verbose):
             #get only useful ones
 
             # [({link}, True, score, "2018" occurrences)]
-            pdf_dump = [k for k in [(l,evaluate_tree(l, tree)) for l in pdf_dump] if k[1][0]]
+            pdf_dump = [k for k in [(l,evaluate_classifier(l, classifier)) for l in pdf_dump] if k[1][0]]
             # pdf_dump = [l for l in [evaluate(p) for p in pdf_dump] if l[0] == True]
             
             # keep only url and source page url, remove duplicates

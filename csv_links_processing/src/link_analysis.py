@@ -2,6 +2,7 @@
 import sys
 from .constants import *
 import re
+from sklearn import tree
 
 def evaluate(link):
     """
@@ -65,8 +66,19 @@ def evaluate(link):
     # return score >= EVALUATION_THRESHOLD and ("2018" in filename or "2018" in anchor), score, year
     # return score >= EVALUATION_THRESHOLD , score, 0
 
-def evaluate_tree(link, tree):
-    return 0
+def evaluate_classifier(link, model):
+    filename = link['pdfUrl'].split("/")[-1].casefold()
+    url = link['pdfUrl'][link['pdfUrl'].find("://")+3:]
+    url = url[url.find("/")+1:-len(filename)]
+    anchor = link['anchor'].casefold()
+
+    features = get_features(filename, anchor, url)
+    # probability of each class
+    pred = model.predict_proba([features])[0]
+    # 0 = negative
+    cond = pred[1] > pred[0]
+    score = max(pred)
+    return cond, score
 
 def get_depth(l):
     """
@@ -93,3 +105,35 @@ def get_depth(l):
             k -= 1
         ss = ss[ss.find("/")+1:]
     return k
+
+def get_features(filename, anchor, url):
+    """
+    Generate features vector to later tree classification
+
+    Arguments:
+        filename string -- filename of the pdf to analyze
+        anchor string -- anchor fo the pdf file
+        url string -- url of the pdf file
+
+    Returns:
+        List of features found on the link
+    """
+    kk = [
+        ("sostenibilit","sustainability"), 
+        ("ambient","environment"),
+        ("bilancio","balance"),
+        ("rapporto","report"),
+        # ("qualit", "qualit"),
+        # ("impact", "impatto"),
+        # ("global", "global"),
+        ("2018", "18")
+    ]
+
+    ff = [filename, anchor, url]
+    
+    ret = []
+    for k in kk:
+        for f in ff:
+            ret.append(int(k[0] in f or k[1] in f))
+
+    return ret

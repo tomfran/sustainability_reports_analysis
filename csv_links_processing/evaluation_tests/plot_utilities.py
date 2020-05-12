@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def get_plot_stats(path):
+
     websites = [[],[]] 
     websites_perc = [[],[]] 
     pdf_links = [[],[]] 

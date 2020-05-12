@@ -1,26 +1,47 @@
-from csv_links_processing import find_reports, find_reports_tree, save_stats, get_stats
+from csv_links_processing import find_reports, find_reports_classifier, save_stats, get_stats
 from downloader import download
 from pdf_ocr import convert
 from elasticsearch_utilities import elastic_population, analyze
 from utilities import get_score_dictionary
 from utilities.constants import *
-from links_decision_tree import generate_tree
+from links_decision_tree import generate_tree, generate_forest
 import json
 import sys
 
 def links():
 	#find reports using notebook function
-	website_links, stats = find_reports(CSV_SOURCE_PATH, verbose=True)
-	save_stats(CSV_EVALUATION_PATH, stats)
+	if 0:
+		website_links, stats = find_reports(CSV_SOURCE_PATH, verbose=True)
+		save_stats(CSV_EVALUATION_PATH, stats)
 
 	#find reports using tree and see what happens
-	dt = generate_tree()
-	w_links_2, stats_2 = find_reports_tree(CSV_SOURCE_PATH, dt, verbose=True)
-	save_stats(CSV_EVALUATION_PATH_TREE, stats_2)
 
-	# get a dictionary with: website_filename : {score : _ , url: _ }
-	# it makes population way easier
-	score_dict = get_score_dictionary(website_links)
+	# dt = generate_tree()['tree']
+	dt = generate_forest()
+	w_links_2, stats_2 = find_reports_classifier(CSV_SOURCE_PATH, dt, verbose=True)
+	print(get_stats(stats_2))
+	save_stats(CSV_EVALUATION_PATH_FOREST + "20.csv", stats_2)
+
+
+
+		# dt = generate_tree()
+		# k = len(dt)
+		# for t in dt:
+		# 	print(k)
+		# 	w_links_2, stats_2 = find_reports_classifier(CSV_SOURCE_PATH, t['tree'], verbose=True)
+		# 	print(get_stats(stats_2))
+		# 	save_stats(CSV_EVALUATION_PATH_TREE + t["name"] + ".csv", stats_2)
+		# 	k -= 1
+
+	if 0:
+
+		with open("new_urls.txt", "w") as f:
+			for k, v in w_links_2.items():
+				for l in v:
+					f.write("{}\n{}\n\n".format(l['url'], l['score']))
+		# get a dictionary with: website_filename : {score : _ , url: _ }
+		# it makes population way easier
+		score_dict = get_score_dictionary(website_links)
 
 	return website_links, score_dict
 

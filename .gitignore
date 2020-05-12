@@ -15,6 +15,7 @@ test.py
 scoredict1
 scoredict2
 lda_models
+new_urls.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

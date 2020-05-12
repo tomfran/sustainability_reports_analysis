@@ -9,6 +9,14 @@ from .utilities import filter_frequency, filter_frequency_relevant
 csv.field_size_limit(sys.maxsize)
 
 def preprocess(path):
+    """Preprocess dataset to then analyze it with an LDA model
+
+    Arguments:
+        path {str} -- Dataset path 
+
+    Returns:
+        countvectorizer.fit_transorm result on the dataset, and countvectorizer object
+    """
     # read csv with index, entities separated by '_'
     data = pd.read_csv(path, error_bad_lines=False, engine="python", quoting=csv.QUOTE_NONE)
     data = data.drop(['elastic_index'], axis = 1)
@@ -24,6 +32,16 @@ def preprocess(path):
     return dtm_tf, tf_vectorizer
 
 def preprocess_freq_count(path, n, m):
+    """Preprocess dataset to then analyze it with an LDA model.
+    It implements filters for inter/intra - document frequency. 
+    A keyword must appear in N documents and M times in a document to get considered.
+
+    Arguments:
+        path {str} -- Dataset path 
+
+    Returns:
+        countvectorizer.fit_transorm result on the dataset, and countvectorizer object
+    """
     # read csv with index, entities separated by '_'
     data = pd.read_csv(path, error_bad_lines=False, engine="python", quoting=csv.QUOTE_NONE)
     data = data.drop(['elastic_index'], axis = 1)
@@ -49,6 +67,16 @@ def preprocess_freq_count(path, n, m):
     return dtm_tf, tf_vectorizer
 
 def preprocess_freq_count_relevant(path, n, m):
+    """Preprocess dataset to then analyze it with an LDA model.
+    It implements filters for inter - document frequency. 
+    A keyword must appear in N documents and be in the first M relevant entities to get considered.
+    
+    Arguments:
+        path {str} -- Dataset path 
+
+    Returns:
+        countvectorizer.fit_transorm result on the dataset, and countvectorizer object
+    """
     # read csv with index, entities separated by '_'
     data = pd.read_csv(path, error_bad_lines=False, engine="python", quoting=csv.QUOTE_NONE)
     data = data.drop(['elastic_index'], axis = 1)
