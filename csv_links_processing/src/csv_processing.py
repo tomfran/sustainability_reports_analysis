@@ -64,7 +64,10 @@ def process(csv_file, verbose):
     if verbose:
         print("\r[\033[1m\033[92m✓\033[0m]\tAll lines processed\033[K")
     # total websites, useful websites, total links, useful links, avg depth, homelinks num
-    stats = (counter, len(ret), total, useful, depth_sum/useful, homelinks)
+    if not useful:
+        stats = (counter, len(ret), total, useful, 0, homelinks)
+    else:
+        stats = (counter, len(ret), total, useful, depth_sum/useful, homelinks)
     return ret, stats
 
 def process_classifier(csv_file, classifier, verbose):
@@ -110,5 +113,9 @@ def process_classifier(csv_file, classifier, verbose):
     if verbose:
         print("\r[\033[1m\033[92m✓\033[0m]\tAll lines processed\033[K")
     # total websites, useful websites, total links, useful links, avg depth, homelinks num
-    stats = (counter, len(ret), total, useful, depth_sum/useful, homelinks)
+    
+    if not useful:
+        stats = (counter, len(ret), total, useful, 0, homelinks)
+    else:
+        stats = (counter, len(ret), total, useful, depth_sum/useful, homelinks)
     return ret, stats

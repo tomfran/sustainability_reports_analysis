@@ -5,13 +5,13 @@ from sklearn import metrics
 import joblib
 # from .plot import generate_tree_plot
 
-def generate_tree(dataset_path = "links_decision_tree/data/dtree_dataset.csv", load_name = ""):
+def generate_tree(dataset_path = "links_classifiers/data/dtree_dataset.csv", load_name = ""):
 
     """Generate a decision tree to decide wether a link is referring to a sustainability report or not.
     
 
     Keyword Arguments:
-        dataset_path {str} -- Path to the dataset to use (default: {"links_decision_tree/data/dtree_dataset.csv"})
+        dataset_path {str} -- Path to the dataset to use (default: {"links_classifiers/data/dtree_dataset.csv"})
         load_name {str} -- Model to load and return (default: {""})
 
     Returns:
@@ -20,7 +20,7 @@ def generate_tree(dataset_path = "links_decision_tree/data/dtree_dataset.csv", l
     
     if load_name:
         try:
-            t = joblib.load(load_name + ".sav")
+            t = joblib.load("links_classifiers/models/tree/"+ load_name + ".sav")
             return t
         except Exception:
             print("Could not find tree named %s, generating another one" %load_name)
@@ -57,6 +57,6 @@ def generate_tree(dataset_path = "links_decision_tree/data/dtree_dataset.csv", l
     #order the trees based on accuracy and save the first one
     dtrees.sort(key=lambda x : x['score'], reverse = True)
     t = dtrees[0]
-    joblib.dump(t['tree'], "links_decision_tree/models/tree/" + t['name']+'.sav')
+    joblib.dump(t['tree'], "links_classifiers/models/tree/" + t['name']+'.sav')
     
-    return t
+    return t['tree']

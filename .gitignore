@@ -5,8 +5,8 @@ csv_links_processing/data
 elasticsearch_utilities/stats
 elasticsearch_utilities/src/analysis/translation_dict.py
 lda_topic_model/data
-links_decision_tree/data
-links_decision_tree/model
+links_classifiers/data
+links_classifiers/models
 sett
 tokens.txt
 TODO
@@ -15,7 +15,8 @@ test.py
 scoredict1
 scoredict2
 lda_models
-new_urls.txt
+random_forest_links
+svm_links
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
