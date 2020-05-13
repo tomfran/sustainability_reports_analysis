@@ -1,4 +1,3 @@
-
 import sys
 from .constants import *
 import re
@@ -67,6 +66,17 @@ def evaluate(link):
     # return score >= EVALUATION_THRESHOLD , score, 0
 
 def evaluate_classifier(link, model):
+    """Evaluation function that use a classifier to make the prediction on the 
+    usefulness or not of a link.
+
+    Arguments:
+        link {dict} -- dict containing pdfUrl and anchor
+        model {sklearn classifier} -- classifier to make the prediction:
+        svm, decision tree or random forest
+
+    Returns:
+        [Bool, int] -- Prediction and score
+    """
     filename = link['pdfUrl'].split("/")[-1].casefold()
     url = link['pdfUrl'][link['pdfUrl'].find("://")+3:]
     url = url[url.find("/")+1:-len(filename)]
@@ -76,7 +86,7 @@ def evaluate_classifier(link, model):
     # probability of each class
     pred = model.predict_proba([features])[0]
     # 0 = negative
-    cond = pred[1] > pred[0]
+    cond = pred[1] > pred[0] and max(pred) >= CLASSIFIER_TSH
     score = max(pred)
     return cond, score
 

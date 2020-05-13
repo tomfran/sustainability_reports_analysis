@@ -4,16 +4,21 @@ from pdf_ocr import convert
 from elasticsearch_utilities import elastic_population, analyze
 from utilities import get_score_dictionary
 from utilities.constants import *
-from links_decision_tree import generate_tree, generate_forest
+from links_classifiers import generate_tree, generate_forest, generate_svm
 import json
 import sys
 
 def links():
 	#find reports using notebook function
 	website_links, stats = find_reports(CSV_SOURCE_PATH, verbose=True)
+	print(get_stats(stats))
 	save_stats(CSV_EVALUATION_PATH, stats)
 	score_dict = get_score_dictionary(website_links)
 
+	dt = generate_svm(load_name='8_0')
+	w_links_2, stats_2 = find_reports_classifier(CSV_SOURCE_PATH, dt, verbose=True)
+	print(get_stats(stats_2))
+		
 	return website_links, score_dict
 
 def dwl(website_links):

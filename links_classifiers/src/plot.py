@@ -25,21 +25,12 @@ def generate_tree_plot(dt, X, Y):
         "report\nin filename",
         "report\nin anchor",
         "report\nin url",
-        # "global\nin filename",
-        # "global\nin anchor",
-        # "global\nin url",
-        # "impact\nin filename",
-        # "impact\nin anchor",
-        # "impact\nin url",
-        # "k7\nin filename",
-        # "k7\nin anchor",
-        # "k7\nin url",
         "2018\nin filename",
         "2018\nin anchor",
         "2018\nin url"
     ]
 
     rcParams['figure.figsize'] = 35,16
-    tree.plot_tree(dt['tree'].fit(X,Y),filled=True, class_names= classnames, feature_names=features_names, fontsize=13)
+    tree.plot_tree(dt.fit(X,Y),filled=True, class_names= classnames, feature_names=features_names, fontsize=13)
     plt.title("Sustainability links decision tree")
-    plt.savefig("links_decision_tree/model/tree/tree.png",)
+    plt.savefig("links_classifiers/models/tree/tree.png",)

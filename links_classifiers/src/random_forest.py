@@ -4,7 +4,7 @@ from sklearn import metrics
 import pandas as pd
 import joblib
 
-def generate_forest (dataset_path = "links_decision_tree/data/dtree_dataset.csv", load_name = "", n_trees = 20):
+def generate_forest (dataset_path = "links_classifiers/data/dtree_dataset.csv", load_name = "", n_trees = 20):
     if load_name:
         try:
             t = joblib.load(load_name + ".sav")
@@ -21,7 +21,7 @@ def generate_forest (dataset_path = "links_decision_tree/data/dtree_dataset.csv"
     rf= ensemble.RandomForestClassifier(n_estimators=n_trees, criterion="entropy")
     rf.fit(X_train, y_train)
 
-    print("Random forest accuracy: {}" . format(metrics.accuracy_score(y_test, rf.predict(X_test))))
+    print("SVM accuracy: {}" . format(metrics.accuracy_score(y_test, rf.predict(X_test))))
 
-    joblib.dump(rf, "links_decision_tree/models/random_forest/{}.csv".format(n_trees))
+    joblib.dump(rf, "links_classifiers/models/random_forest/{}.sav".format(n_trees))
     return rf
