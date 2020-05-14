@@ -19,29 +19,18 @@ def generate_svm(dataset_path = "links_classifiers/data/dtree_dataset.csv", load
     Y = data.label
     X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=1)
     
-    svms = [
-        {
+    c = 8.0
+
+    s = {
             "svm" : svm.SVC(probability=True, C=c).fit(X_train, y_train), 
             "name": "c_{}".format(c).replace('.', '_')
         }
-        for c in [8.0]
-    ]
 
-    # generate_svm_plot(X_train, y_train, 8.0, g='scale')
+    generate_svm_plot()
 
-    # make predictions for all trees, and check the accuracy
-    predictions = [s['svm'].predict(X_test) for s in svms]
-    scores = [metrics.accuracy_score(y_test, p) for p in predictions]
-
-    # add scores to tree list
-    i = 0
-    for d in svms:
-        d['score'] = scores[i]
-        i += 1
+    s['score'] = metrics.accuracy_score(y_test, s['svm'].predict(X_test))
     
-    for s in svms:
-        joblib.dump(s['svm'], "links_classifiers/models/svm/{}.sav".format(s['name']))
+    joblib.dump(s['svm'], "links_classifiers/models/svm/{}.sav".format(s['name']))
 
-    # svms.sort(key=lambda x : x['score'], reverse = True)
-    return svms[0]['svm']
+    return s['svm']
     
