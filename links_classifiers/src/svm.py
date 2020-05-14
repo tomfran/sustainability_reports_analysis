@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import metrics
 import pandas as pd
 import joblib
+from .plot import generate_svm_plot
 
 def generate_svm(dataset_path = "links_classifiers/data/dtree_dataset.csv", load_name = ""):
     if load_name:
@@ -21,11 +22,12 @@ def generate_svm(dataset_path = "links_classifiers/data/dtree_dataset.csv", load
     svms = [
         {
             "svm" : svm.SVC(probability=True, C=c).fit(X_train, y_train), 
-            "name": "{}".format(c).replace('.', '_')
+            "name": "c_{}".format(c).replace('.', '_')
         }
         for c in [8.0]
     ]
 
+    # generate_svm_plot(X_train, y_train, 8.0, g='scale')
 
     # make predictions for all trees, and check the accuracy
     predictions = [s['svm'].predict(X_test) for s in svms]
@@ -40,6 +42,6 @@ def generate_svm(dataset_path = "links_classifiers/data/dtree_dataset.csv", load
     for s in svms:
         joblib.dump(s['svm'], "links_classifiers/models/svm/{}.sav".format(s['name']))
 
-    svms.sort(key=lambda x : x['score'], reverse = True)
-
+    # svms.sort(key=lambda x : x['score'], reverse = True)
     return svms[0]['svm']
+    

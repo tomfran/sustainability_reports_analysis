@@ -30,6 +30,7 @@ def links():
 	print("\n" + name)
 	dt = generate_svm(load_name=name)
 	w_links_2, stats_2 = find_reports_classifier(CSV_SOURCE_PATH, dt, verbose=True)
+	print(get_stats(stats_2))
 	save_stats(CSV_EVALUATION_PATH_SVM + "{}.csv".format(name), stats_2)
 	with open("svm_links/{}_filtered_0.75_new.txt".format(name), "w") as f:
 		for k, v in w_links_2.items():
