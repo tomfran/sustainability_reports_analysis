@@ -21,7 +21,7 @@ def generate_forest (dataset_path = "links_classifiers/data/dtree_dataset.csv", 
     rf= ensemble.RandomForestClassifier(n_estimators=n_trees, criterion="entropy")
     rf.fit(X_train, y_train)
 
-    print("SVM accuracy: {}" . format(metrics.accuracy_score(y_test, rf.predict(X_test))))
+    print("Random forest accuracy: {}" . format(metrics.accuracy_score(y_test, rf.predict(X_test))))
 
     joblib.dump(rf, "links_classifiers/models/random_forest/{}.sav".format(n_trees))
     return rf
