@@ -9,7 +9,7 @@ def generate_tree_plot(dt, X, Y):
     """Generate the visual representation of the given tree, with relative input and output lists.
 
     Arguments:
-        dt {sklearn decision tree} -- Decision tree to plot
+        dt {dict with sklearn decision tree and name} -- Decision tree to plot
         X {list} -- input top the decision tree
         Y {list} -- ground truth labels
     """
@@ -34,9 +34,9 @@ def generate_tree_plot(dt, X, Y):
     ]
 
     rcParams['figure.figsize'] = 35,16
-    tree.plot_tree(dt.fit(X,Y),filled=True, class_names= classnames, feature_names=features_names, fontsize=13)
-    plt.title("Sustainability links decision tree")
-    plt.savefig("links_classifiers/models/tree/tree.png",)
+    tree.plot_tree(dt['tree'].fit(X,Y),filled=True, class_names= classnames, feature_names=features_names, fontsize=13)
+    plt.title("Sustainability links decision tree, {}".format(dt['name']))
+    plt.savefig("links_classifiers/models/tree/plots/{}.png".format(dt['name']))
 
 
 def generate_svm_plot(dataset_path = "links_classifiers/data/dtree_dataset.csv", c=8.0):

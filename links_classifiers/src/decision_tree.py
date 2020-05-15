@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import tree
 from sklearn import metrics
 import joblib
-# from .plot import generate_tree_plot
+from .plot import generate_tree_plot
 
 def generate_tree(dataset_path = "links_classifiers/data/dtree_dataset.csv", load_name = ""):
 
@@ -34,14 +34,15 @@ def generate_tree(dataset_path = "links_classifiers/data/dtree_dataset.csv", loa
     #generate some decision trees to see what's the best one
     dtrees = [
         {
-            "tree" : tree.DecisionTreeClassifier(min_samples_leaf=ms,
-                                                 criterion=criterion, 
-                                                 max_depth=depth).fit(X_train, y_train),  
-            "name": "%s_%d_%d" %(criterion[0], ms, depth)
+            "tree" : tree.DecisionTreeClassifier(criterion=criterion, 
+                                                 max_depth=depth,
+                                                 max_features=mf).fit(X_train, y_train),  
+            "name": "c{}_d{}_mf{}".format(criterion[:4], depth, mf)
         }
-        for ms in [i for i in range(2,21,2)]
+        # for ms in [8, 10, 20]
         for criterion in ["gini", "entropy"]
-        for depth in [i for i in range(2,11,2)]
+        for depth in [3,4,5,6]
+        for mf in ['sqrt', 'log2', None]
     ]
 
     # make predictions for all trees, and check the accuracy
@@ -56,7 +57,9 @@ def generate_tree(dataset_path = "links_classifiers/data/dtree_dataset.csv", loa
     
     #order the trees based on accuracy and save the first one
     dtrees.sort(key=lambda x : x['score'], reverse = True)
-    t = dtrees[0]
-    joblib.dump(t['tree'], "links_classifiers/models/tree/" + t['name']+'.sav')
+    for t in dtrees:
+        generate_tree_plot(t, X_train, y_train)
+        joblib.dump(t['tree'], "links_classifiers/models/tree/" + t['name']+'.sav')
+    return dtrees
     
     return t['tree']

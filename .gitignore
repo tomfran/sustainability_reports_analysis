@@ -16,7 +16,9 @@ scoredict1
 scoredict2
 lda_models
 random_forest_links
+tree_links
 svm_links
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
