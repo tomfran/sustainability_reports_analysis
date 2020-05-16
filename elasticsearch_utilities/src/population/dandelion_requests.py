@@ -25,7 +25,8 @@ def get_entities(text, token, verbose = False):
     req_body = {
         "token" : token,
         "text" : text,
-        "top_entities" : TOP_ENTITIES_NUMBER
+        "top_entities" : TOP_ENTITIES_NUMBER,
+        "include" : ['types']
     }
 
     try:
@@ -36,6 +37,8 @@ def get_entities(text, token, verbose = False):
     
     ret = {}
     
+    # print(json.dumps(jd, indent=2))
+
     if "error" not in jd:
 
         occ = {}
@@ -50,13 +53,23 @@ def get_entities(text, token, verbose = False):
         e_list = []
 
         for a in jd["annotations"]:
-            e_list.append(a["title"])
-            i = a["id"]
-            if occ.get(i):
-                te_list.append(a["title"])
-                occ[i] -= 1
-                if occ[i] == 0:
-                    occ.pop(i)        
+            skip = False
+            for t in a['types']:
+                tc = t.casefold()
+                #remove places and locations from entities and top entities
+                if 'place' in tc and \
+                'location' in tc:
+                    skip = True
+                    break
+
+            if not skip:
+                e_list.append(a["title"])
+                i = a["id"]
+                if occ.get(i):
+                    te_list.append(a["title"])
+                    occ[i] -= 1
+                    if occ[i] == 0:
+                        occ.pop(i)        
 
         ret["top_entities"] = te_list
         ret["all_entities"] = e_list

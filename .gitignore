@@ -3,6 +3,7 @@ downloader/pdfs
 downloader/filtered_pdf_links.csv
 csv_links_processing/data
 elasticsearch_utilities/stats
+elasticsearch_utilities/stats_new
 elasticsearch_utilities/src/analysis/translation_dict.py
 lda_topic_model/data
 links_classifiers/data
@@ -18,6 +19,7 @@ lda_models
 random_forest_links
 tree_links
 svm_links
+misc
 
 
 # Byte-compiled / optimized / DLL files

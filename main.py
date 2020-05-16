@@ -10,21 +10,23 @@ import sys
 
 def links():
 	#find reports using notebook function
-	website_links, stats = find_reports(CSV_SOURCE_PATH, verbose=True)
-	save_stats(CSV_EVALUATION_PATH, stats)
+	# website_links, stats = find_reports(CSV_SOURCE_PATH, verbose=True)
+	# save_stats(CSV_EVALUATION_PATH, stats)
 	
-	name = "c_8_0"
+	name = "c_8_0_rbf"
+
 	s = generate_svm(load_name=name)
-	w_links_2, stats_2 = find_reports_classifier(CSV_SOURCE_PATH, s, verbose=True)
-	print(get_stats(stats_2))
-	save_stats(CSV_EVALUATION_PATH_SVM + "{}.csv".format(name), stats_2)
+	website_links, stats = find_reports_classifier(CSV_SOURCE_PATH, s, verbose=True)
+	print(get_stats(stats))
+	# save_stats(CSV_EVALUATION_PATH_SVM + "{}.csv".format(name), stats_2)
 
 	score_dict = get_score_dictionary(website_links)	
 	return website_links, score_dict
 
 def dwl(website_links):
 	# download the useful pdf files found
-	download(website_links, OCR_PDF_PATH)
+	# download(website_links, OCR_PDF_PATH)
+	download(website_links, NEW_DOWNLOAD_PATH)
 
 def ocr():
 	# ocr the documents to get the texts
@@ -41,11 +43,11 @@ def an():
 	analyze()
 
 def main():
-	w_l, s = links()
+	# w_l, s = links()
 	# dwl(w_l)
 	# ocr()
 	# elastic(s)
-	# an()
+	an()
 
 if __name__ == "__main__":
 	main()

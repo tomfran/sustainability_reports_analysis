@@ -25,9 +25,12 @@ def download(links, path, limit = -2):
     tot = 0
     err = 0
     for k, v in links.items():
+            
         if i == limit:
             break
         i+= 1
+        if i <= 198:
+            continue
         print("\n\nWebsite number: %d" %i)
         try:
             os.makedirs("%s/%s" %(path, k))

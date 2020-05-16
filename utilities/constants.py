@@ -7,5 +7,6 @@ CSV_EVALUATION_PATH_FOREST  = "csv_links_processing/evaluation_tests/data/random
 CSV_EVALUATION_PATH_SVM     = "csv_links_processing/evaluation_tests/data/svm/"
 CSV_EVALUATION_FOLDER       = "csv_links_processing/evaluation_tests/data/"
 OCR_PDF_PATH                = "pdf_ocr/data/pdf"
+NEW_DOWNLOAD_PATH = 'downloads'
 TOKENS_PATH                 = "tokens.txt"
 LDA_INPUT_CSV               = "elasticsearch_utilities/stats/input.csv"

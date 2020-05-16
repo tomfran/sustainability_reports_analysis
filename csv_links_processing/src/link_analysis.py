@@ -59,6 +59,15 @@ def evaluate(link):
     if re.match(r'(.*)20[0-2]([0-7]|[9])(.*)', filename) and not re.match(r'(.*)18(.*)', filename):
         score = 0
 
+    if score >= EVALUATION_THRESHOLD and year > 0:
+
+        ff = get_features(filename, anchor, url)
+        ff.append(1)
+        ff = [str(i) for i in ff]
+        with open("dataset_test.txt", "a") as f:
+            f.write("{}\n".format(",".join(ff)))
+
+
     return score >= EVALUATION_THRESHOLD and year > 0, score, year
     # return score >= EVALUATION_THRESHOLD and "2018" in filename, score, year
     # return score >= EVALUATION_THRESHOLD and ("2018" in anchor), score, year
@@ -121,7 +130,7 @@ def get_features(filename, anchor, url):
     Generate features vector to later tree classification
 
     Arguments:
-        filename string -- filename of the pdf to analyze
+        filename string -- filename of the  pdf to analyze
         anchor string -- anchor fo the pdf file
         url string -- url of the pdf file
 

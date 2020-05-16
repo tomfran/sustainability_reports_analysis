@@ -5,7 +5,7 @@ import pandas as pd
 import joblib
 from .plot import generate_svm_plot
 
-def generate_svm(dataset_path = "links_classifiers/data/dtree_dataset.csv", load_name = ""):
+def generate_svm(dataset_path = "links_classifiers/data/dtree_dataset.csv", load_name = "", kernel_type='rbf'):
     if load_name:
         try:
             t = joblib.load("links_classifiers/models/svm/"+ load_name + ".sav")
@@ -22,15 +22,18 @@ def generate_svm(dataset_path = "links_classifiers/data/dtree_dataset.csv", load
     c = 8.0
 
     s = {
-            "svm" : svm.SVC(probability=True, C=c).fit(X_train, y_train), 
-            "name": "c_{}".format(c).replace('.', '_')
+            "svm" : svm.SVC(probability=True, C=c, kernel=kernel_type).fit(X_train, y_train), 
+            "name": "c_{}_{}".format(c, kernel_type).replace('.', '_')
         }
 
     generate_svm_plot()
-
-    s['score'] = metrics.accuracy_score(y_test, s['svm'].predict(X_test))
+    y_pred = s['svm'].predict(X_test)
+    s['score'] = metrics.accuracy_score(y_test, y_pred)
+    s['confusion_matrix'] = metrics.confusion_matrix(y_test, y_pred)
+    print(s)
     
     joblib.dump(s['svm'], "links_classifiers/models/svm/{}.sav".format(s['name']))
+
 
     return s['svm']
     
