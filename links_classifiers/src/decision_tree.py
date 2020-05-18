@@ -5,13 +5,13 @@ from sklearn import metrics
 import joblib
 from .plot import generate_tree_plot
 
-def generate_tree(dataset_path = "links_classifiers/data/dtree_dataset.csv", load_name = ""):
+def generate_tree(dataset_path = "links_classifiers/data/dataset.csv", load_name = ""):
 
     """Generate a decision tree to decide wether a link is referring to a sustainability report or not.
     
 
     Keyword Arguments:
-        dataset_path {str} -- Path to the dataset to use (default: {"links_classifiers/data/dtree_dataset.csv"})
+        dataset_path {str} -- Path to the dataset to use (default: {"links_classifiers/data/dataset.csv"})
         load_name {str} -- Model to load and return (default: {""})
 
     Returns:

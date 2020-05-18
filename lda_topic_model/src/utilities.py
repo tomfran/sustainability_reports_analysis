@@ -4,9 +4,9 @@ def print_vocab(dd):
     Arguments:
         dd dict
     """
-    print("Total words in vocabulary : %d \n\nWords:\n" %len(dd))
+    print("Total words in vocabulary : %d\n\nWords:" %len(dd))
     for i, k in enumerate(dd):
-        if i < 10:
+        if i < 5:
             print("'%s' : %s" %(k,dd[k]))
         else: 
             print("...") 

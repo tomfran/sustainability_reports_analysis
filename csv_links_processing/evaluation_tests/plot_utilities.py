@@ -33,17 +33,17 @@ def get_plot_stats(path):
     return stp
 
 def add_labels(ax, rects1, rects2, x, i):
-    titles = ["Websites who published", "Websites who published %", \
-              "Useful pdf links", "Useful pdf links %", \
-              "Average depth", "Link in homepage"]
-    ylab = ["Websites number", "Websites percentage", \
-            "Pdf number", "Pdf percentage", \
-            "Depth", "Websites number"]
+    titles = ["Siti che hanno pubblicato", "Percentuale siti che hanno pubblicato", \
+              "Numero di pdf utili", "Percentuale pdf utili", \
+              "Profondità media", "Numero pdf in homepage"]
+    ylab = ["Quantità", "Percentuale", \
+            "Quantità", "Percentuale", \
+            "Profondità", "Qauntità"]
 
     labels = ["1", "2", "3", "4", "5"]
     
     ax.set_ylabel(ylab[i])
-    ax.set_xlabel("Evaluation methods")
+    ax.set_xlabel("Valutazioni")
     ax.set_title(titles[i])
     ax.set_xticks(x)
     ax.set_xticklabels(labels)
@@ -66,15 +66,19 @@ def autolabel(rects, ax):
                     ha='center', va='bottom')
 
 
-def generate_plot(i, stp):
-    a = stp[i][0]
-    b = stp[i][1]
+def generate_plot(stp):
+    fig, ax = plt.subplots(3, 2,figsize=(16,18))
+    fig.tight_layout(pad=18.0)
+    ax = ax.flatten()
+    for i in range(6):
+        a = stp[i][0]
+        b = stp[i][1]
+        x = np.arange(len(a))  # the label locations
+        width = 0.35  # the width of the bars
+        rects1 = ax[i].bar(x - width/2, a, width, label='60 thold')
+        rects2 = ax[i].bar(x + width/2, b, width, label='40 thold')
+        add_labels(ax[i], rects1, rects2, x, i)
+        if i == 1:
+            ax[i].legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
-    x = np.arange(len(a))  # the label locations
-    fig, ax = plt.subplots(figsize=(8, 4))
-    width = 0.35  # the width of the bars
-    rects1 = ax.bar(x - width/2, a, width, label='60 thold')
-    rects2 = ax.bar(x + width/2, b, width, label='40 thold')
 
-    add_labels(ax, rects1, rects2, x, i)
-    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))

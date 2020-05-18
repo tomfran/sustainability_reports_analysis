@@ -4,7 +4,7 @@ from sklearn import metrics
 import pandas as pd
 import joblib
 
-def generate_forest (dataset_path = "links_classifiers/data/dtree_dataset.csv", load_name = "", n_trees = 20):
+def generate_forest (dataset_path = "links_classifiers/data/dataset.csv", load_name = "", n_trees = 20):
     if load_name:
         try:
             t = joblib.load(load_name + ".sav")

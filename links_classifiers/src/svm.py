@@ -5,7 +5,7 @@ import pandas as pd
 import joblib
 from .plot import generate_svm_plot
 
-def generate_svm(dataset_path = "links_classifiers/data/dtree_dataset.csv", load_name = "", kernel_type='rbf'):
+def generate_svm(dataset_path = "links_classifiers/data/dataset.csv", load_name = "", kernel_type='rbf'):
     if load_name:
         try:
             t = joblib.load("links_classifiers/models/svm/"+ load_name + ".sav")

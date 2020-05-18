@@ -39,7 +39,7 @@ def generate_tree_plot(dt, X, Y):
     plt.savefig("links_classifiers/models/tree/plots/{}.png".format(dt['name']))
 
 
-def generate_svm_plot(dataset_path = "links_classifiers/data/dtree_dataset.csv", c=8.0):
+def generate_svm_plot(dataset_path = "links_classifiers/data/dataset.csv", c=8.0):
     plt.rcParams.update({'font.size': 8})
     features = [
         "k1_filename",

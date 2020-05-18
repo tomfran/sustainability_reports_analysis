@@ -3,7 +3,7 @@ downloader/pdfs
 downloader/filtered_pdf_links.csv
 csv_links_processing/data
 elasticsearch_utilities/stats
-elasticsearch_utilities/stats_new
+elasticsearch_utilities/stats_old
 elasticsearch_utilities/src/analysis/translation_dict.py
 lda_topic_model/data
 links_classifiers/data

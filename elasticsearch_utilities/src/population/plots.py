@@ -9,9 +9,9 @@ def add_labels(ax, rects1, x, dd):
 
     labels = [k.replace("_", " ") for k, v in dd.items()]
 
-    ax.set_ylabel("Quantity")
-    ax.set_xlabel("Stats")
-    ax.set_title("Population stats")
+    ax.set_ylabel("Quantità")
+    ax.set_xlabel("N° statistica")
+    ax.set_title("Statistiche popolazione")
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation='vertical')
 
