@@ -18,11 +18,12 @@ def generate_plot(path, en="all"):
     x, y, z = get_plot_stats(path)
     fig = plt.figure(figsize=(9, 5), dpi=100, tight_layout=False)
     ax = Axes3D(fig)
-    ax.set_title("Vocabulary size")
+    ax.set_title("Grandezza vocabolario")
     ax.set_xlabel('N')
     ax.set_ylabel('M')
-    ax.set_zlabel('size')
+    ax.set_zlabel('Grandezza')
     surf = ax.plot_trisurf(x, y, z, cmap=cm.jet, linewidth=0.7)
+    
     fig.colorbar(surf, shrink=0.4, aspect=5)
     ax.view_init(30, 55)
     if en == "top":
