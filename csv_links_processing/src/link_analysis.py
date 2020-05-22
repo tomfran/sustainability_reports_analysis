@@ -68,7 +68,7 @@ def evaluate(link):
             f.write("{}\n".format(",".join(ff)))
 
 
-    return score >= EVALUATION_THRESHOLD and year > 0, score, year
+    return score >= EVALUATION_THRESHOLD and year > 0, score
     # return score >= EVALUATION_THRESHOLD and "2018" in filename, score, year
     # return score >= EVALUATION_THRESHOLD and ("2018" in anchor), score, year
     # return score >= EVALUATION_THRESHOLD and ("2018" in filename or "2018" in anchor), score, year

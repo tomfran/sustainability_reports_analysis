@@ -21,6 +21,7 @@ def generate_tree(dataset_path = "links_classifiers/data/dataset.csv", load_name
     if load_name:
         try:
             t = joblib.load("links_classifiers/models/tree/"+ load_name + ".sav")
+
             return t
         except Exception:
             print("Could not find tree named %s, generating another one" %load_name)
@@ -39,7 +40,6 @@ def generate_tree(dataset_path = "links_classifiers/data/dataset.csv", load_name
                                                  max_features=mf).fit(X_train, y_train),  
             "name": "c{}_d{}_mf{}".format(criterion[:4], depth, mf)
         }
-        # for ms in [8, 10, 20]
         for criterion in ["gini", "entropy"]
         for depth in [3,4,5,6]
         for mf in ['sqrt', 'log2', None]
@@ -48,7 +48,7 @@ def generate_tree(dataset_path = "links_classifiers/data/dataset.csv", load_name
     # make predictions for all trees, and check the accuracy
     predictions = [d['tree'].predict(X_test) for d in dtrees]
     scores = [metrics.accuracy_score(y_test, p) for p in predictions]
-
+    
     # add scores to tree list
     i = 0
     for d in dtrees:
@@ -57,9 +57,9 @@ def generate_tree(dataset_path = "links_classifiers/data/dataset.csv", load_name
     
     #order the trees based on accuracy and save the first one
     dtrees.sort(key=lambda x : x['score'], reverse = True)
-    for t in dtrees:
-        generate_tree_plot(t, X_train, y_train)
-        joblib.dump(t['tree'], "links_classifiers/models/tree/" + t['name']+'.sav')
-    return dtrees
-    
-    return t['tree']
+
+    # for t in dtrees:
+    #     generate_tree_plot(t, X_train, y_train)
+    #     joblib.dump(t['tree'], "links_classifiers/models/tree/" + t['name']+'.sav')
+    print(dtrees[0])
+    return dtrees[0]['tree']
