@@ -3,6 +3,7 @@ import requests
 import json
 from ..constants import *
 from .queries import *
+import re
 
 def get_recurrent_entities(es, query, size = -1):
     res = es.search(index=INDEX_NAME, body=query, size=200)
@@ -77,3 +78,46 @@ def get_all_revenues(es, query):
     
     rr = {k: v for k, v in sorted(rr.items(), key=lambda item: item[0], reverse = True)}
     return rr
+
+def get_consulting_companies(es, query):
+    res = es.search(index=INDEX_NAME, body=query, size=200)
+    ret = {}
+    consulting_regex = "(KPMG|deloitte|pwc|kpmg|EY|Deloitte|PwC)"
+    rev = "assurance|indipendent|revision|third.+party|support|process|consult"
+    for h in res['hits']['hits']:
+        cc = []
+        text = h['_source']['pdf_text']
+        ll = [(m.start(0), m.end(0)) for m in re.finditer(rev, text)]
+        if ll:
+            for l in ll:
+                text_s = text[l[0]-100:l[1]+100]
+                kk = [(m.start(0), m.end(0)) for m in re.finditer(consulting_regex, text_s)]
+                if kk:
+                    for k in kk:
+                        cc.append(text_s[k[0]:k[1]])
+        if cc:
+            ret[h['_id']] = list(set(cc))
+    return ret
+
+def get_punctual_data(es, query):
+    res = es.search(index=INDEX_NAME, body=query, size=200)
+    ret = {}
+    nums = "[0-9]+"
+    rev = "(water|acqua).*[0-9]+"
+    for h in res['hits']['hits']:
+        if "cabot" in h['_source']['url']:
+            cc = []        
+            text = h['_source']['pdf_text'].casefold()
+            ll = [(m.start(0), m.end(0)) for m in re.finditer(rev, text)]
+            if ll:
+                for l in ll:
+                    text_s = text[l[0]:l[1]+20]
+                    print(text_s)
+                    # kk = [(m.start(0), m.end(0)) for m in re.finditer(nums, text_s)]
+                    # if kk:
+                    #     for k in kk:
+                    #         cc.append(text_s[k[0]:k[1]])
+            if cc:
+                ret[h['_id']] = cc
+
+    return ret

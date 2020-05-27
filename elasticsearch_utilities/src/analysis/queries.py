@@ -12,9 +12,25 @@ match_ateco_query = {
                     "ateco" : ""
                 }
             }
+        }\
+    }
+}
+
+match_consulting_query = {
+    "query": {
+        "bool" : {
+            "must" : {
+                "match" : {
+                    "pdf_text" : {
+                        "value" : "", 
+                        "fuzziness" : 2
+                    }
+                }
+            }
         }
     }
 }
+
 
 revenue_range_query = {
     "query" : {

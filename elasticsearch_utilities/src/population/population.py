@@ -32,7 +32,7 @@ def populate(atoka_token, dandelion_token, score_dict, verbose = False):
             if verbose:
                 print("\n\033[1m%d. %s\033[0m" % (counter, converted_pdf), end = "\n\n")
                 print("Getting company")
-                
+            
             d = get_company(company, atoka_token)
             if d:
                 # if a company is matched

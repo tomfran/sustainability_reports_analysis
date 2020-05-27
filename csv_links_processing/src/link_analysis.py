@@ -13,6 +13,7 @@ def evaluate(link):
     Returns:
         True if the link can be a sustainability pdfs, False otherwise
     """
+
     score = 0
     # remove http://, and then domain
     filename = link['pdfUrl'].split("/")[-1].casefold()

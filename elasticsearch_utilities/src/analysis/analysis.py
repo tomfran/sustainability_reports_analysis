@@ -7,9 +7,7 @@ from .queries import *
 from .company_filters import *
 from statistics import mean 
 
-def analyze():
-    es=Elasticsearch([{'host':HOSTNAME,'port':PORT_NUMBER}])
-
+def get_ateco_entities_revenue(es):
     ma_entities = get_recurrent_entities(es, match_all_query)
     output_csv(POPULATION_CSV_PATH_NEW + "all/all_entities_frequency.csv", ma_entities, ENTITIES_HD)
     
@@ -40,27 +38,27 @@ def analyze():
         path = "%s%s%s.csv" %(POPULATION_CSV_PATH_NEW, "revenue/recurrent_entities/", s)
         output_csv(path, ef, ENTITIES_HD)
 
+def get_entities_LDA(es):
     ie = get_index_entities(es, match_all_query)
-
-    print(mean([len(v) for k, v in ie.items()]))
-
     top_e = get_index_top_entities(es, match_all_query)
-    print(mean([len(v) for k, v in top_e.items()]))
-
     te = translate_entities(ie)
     top_e = translate_entities(top_e)
-
     path = "%s%s%s.csv" %(POPULATION_CSV_PATH_NEW, "", "input_all_entities_en")
     output_LDA_input(path, te)
-
     path = "%s%s%s.csv" %(POPULATION_CSV_PATH_NEW, "", "input_top_entities_en")
     output_LDA_input(path, top_e)
 
-    # for i in range(10,110,10):
-    #     n = 0  #unused for now
-    #     m = round(170*i/100)
-    #     path = "%s%s%s%d.csv" %(POPULATION_CSV_PATH_NEW, "input_filtered/", "input_all_entities_en_filtered_", i)
-    #     output_LDA_input_filtered(path, te, n, m)
 
+def test(es):
+    print(json.dumps(get_consulting_companies(es, match_all_query), indent=2))
+    # print("\n\n")
+    # (json.dumps(get_punctual_data(es, match_all_query), indent=2))
+
+    
+def analyze():
+    es=Elasticsearch([{'host':HOSTNAME,'port':PORT_NUMBER}])
+    # get_ateco_entities_revenue(es)
+    # get_entities_LDA(es)
+    test(es)
 if __name__ == "__main__":
     analyze()

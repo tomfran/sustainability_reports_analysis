@@ -43,11 +43,11 @@ def an():
 	analyze()
 
 def main():
-	w_l, s = links()
+	# w_l, s = links()
 	# dwl(w_l)
 	# ocr()
-	elastic(s)
-	# an()
+	# elastic(s)
+	an()
 
 if __name__ == "__main__":
 	main()
