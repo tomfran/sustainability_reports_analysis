@@ -31,10 +31,17 @@ def populate(atoka_token, dandelion_token, score_dict, verbose = False):
         for converted_pdf in sorted(os.listdir("%s/%s" %(PDFS_PATH, company))):
             if verbose:
                 print("\n\033[1m%d. %s\033[0m" % (counter, converted_pdf), end = "\n\n")
-                print("Getting company")
-            
-            d = get_company(company, atoka_token)
-            if d:
+
+            key = "%s_%s" %(company, converted_pdf.replace(".txt", ".pdf"))
+            pdf_info = score_dict.get(key)
+                    
+            if pdf_info:
+                d = (pdf_info)
+                if verbose:
+                    print("Getting company")
+                d = get_company(company, atoka_token)
+                if not d and verbose:
+                    print("Error getting commpany")
                 # if a company is matched
                 file_path = "%s/%s/%s" %(PDFS_PATH, company, converted_pdf)
                 with open(file_path) as f:        
@@ -47,14 +54,8 @@ def populate(atoka_token, dandelion_token, score_dict, verbose = False):
                         #if entities found
                         d.update(ent)
 
-                        key = "%s_%s" %(company, converted_pdf.replace(".txt", ".pdf"))
-                        pdf_info = score_dict.get(key)
-                        
-                        if pdf_info:
-                            d.update(pdf_info)
-                        
                         print("Sending")
-                        res = es.index(INDEX_NAME, d, doc_type='company_sustainability_report', id = counter)
+                        res = es.index(INDEX_NAME, d, doc_type='sustainability_report', id = counter)
                         print("DONE")
                         
                         if verbose:
@@ -64,11 +65,10 @@ def populate(atoka_token, dandelion_token, score_dict, verbose = False):
                         stats = update_stats(stats, d) 
                     else:
                         if verbose:
-                            print("Error")
+                            print("Error getting entities")
             else:
                 if verbose:
-                    print("Error")
-                    
+                    print("Could not get url and score")
     stats['total'] = counter-1
     return stats
         

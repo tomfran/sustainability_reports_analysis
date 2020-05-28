@@ -13,7 +13,6 @@ def evaluate(link):
     Returns:
         True if the link can be a sustainability pdfs, False otherwise
     """
-
     score = 0
     # remove http://, and then domain
     filename = link['pdfUrl'].split("/")[-1].casefold()
@@ -98,6 +97,15 @@ def evaluate_classifier(link, model):
     # 0 = negative
     cond = pred[1] > pred[0] and max(pred) >= CLASSIFIER_TSH
     score = max(pred)
+
+    # if cond:
+    #     with open("misc/depths_positive.txt", "a") as f:
+    #         f.write("{}\n".format(get_depth(link)))
+    # else:
+    #     with open("misc/depths_negative.txt", "a") as f:
+    #         f.write("{}\n".format(get_depth(link)))
+
+
     return cond, score
 
 def get_depth(l):

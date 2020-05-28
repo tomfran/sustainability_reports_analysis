@@ -1,6 +1,9 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import norm
+
 
 def get_plot_stats(path):
 
@@ -82,3 +85,21 @@ def generate_plot(stp):
             ax[i].legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
 
+def get_density_depth():
+    pos = []
+    with open("misc/depths_positive.txt") as f:
+        pos = [int(l.replace('\n', '')) for l in f.readlines()]
+    neg = []
+    with open("misc/depths_negative.txt") as f:
+        neg = [int(l.replace('\n', '')) for l in f.readlines()]
+
+    sns.set()
+    fig, ax = plt.subplots(figsize = (10,6))
+    ax = sns.distplot(pos, fit_kws={"color":"red"}, fit=norm, kde=False, hist = False, label = "Negativi")
+    ax = sns.distplot(neg, fit_kws={"color":"green"}, fit=norm, kde=False, hist = False, label = "Positivi")
+    ax.set(xlim=(1, 8))
+    ax.legend()
+    # a_plot.set(ylim=(0, 2000))  
+    # ax = sns.distplot(pos)
+    plt.show()
+    # plt.savefig("csv_links_processing/data/plots/density_plot.png")

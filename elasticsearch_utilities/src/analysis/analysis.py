@@ -48,17 +48,15 @@ def get_entities_LDA(es):
     path = "%s%s%s.csv" %(POPULATION_CSV_PATH_NEW, "", "input_top_entities_en")
     output_LDA_input(path, top_e)
 
-
 def test(es):
     print(json.dumps(get_consulting_companies(es, match_all_query), indent=2))
     # print("\n\n")
     # (json.dumps(get_punctual_data(es, match_all_query), indent=2))
-
     
 def analyze():
     es=Elasticsearch([{'host':HOSTNAME,'port':PORT_NUMBER}])
     # get_ateco_entities_revenue(es)
-    # get_entities_LDA(es)
-    test(es)
+    get_entities_LDA(es)
+    # test(es)
 if __name__ == "__main__":
     analyze()
