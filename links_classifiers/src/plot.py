@@ -138,7 +138,7 @@ def get_probability_density_plot():
         new = [float(l.replace('\n', '')) for l in f.readlines()]
     
     sns.set()
-    fig, ax = plt.subplots(figsize = (10,7))
+    fig, ax = plt.subplots(figsize = (10,5))
     ax = sns.distplot(new, kde=True, hist = True, norm_hist = False, label = "Nuovi link")
     ax = sns.distplot(both_neg, kde=True, hist = True, norm_hist = False, label = "Link scartati")
     
@@ -150,7 +150,7 @@ def get_probability_density_plot():
     # ax = sns.distplot(new, label = "Nuovi link")
     # ax = sns.distplot(both_neg, label = "Link scartati")
     ax.set(xlim=(-0.1, 1.1))
-    ax.set(xlabel="Probabilità SVM", ylabel = "N° sample")
+    ax.set(xlabel="Probabilità SVM", ylabel = "Densità di probabilità")
     ax.legend()
     # a_plot.set(ylim=(0, 2000))  
     # ax = sns.distplot(pos)

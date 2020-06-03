@@ -94,12 +94,16 @@ def get_density_depth():
         neg = [int(l.replace('\n', '')) for l in f.readlines()]
 
     sns.set()
-    fig, ax = plt.subplots(figsize = (10,6))
-    ax = sns.distplot(pos, kde_kws={'bw':1}, kde=True, hist = True, label = "Positivi")
-    # ax = sns.distplot(pos, kde=True, hist = True, label = "Positivi")
-    ax = sns.distplot(neg, kde_kws={'bw':1}, kde=True, hist = True, label = "Negativi")
-    # ax = sns.distplot(neg, kde=True, hist = True, label = "Negativi")
-    ax.set(xlim=(0, 8))
+    bins=np.arange(min(pos), max(pos) +1)
+    fig, ax = plt.subplots(figsize = (10,5))
+    ax = sns.distplot(pos, bins = bins ,kde=True,hist_kws={"rwidth":1}, hist = True, norm_hist = False, label = "Bilanci di sostenibilità")
+    bins=np.arange(min(neg), max(neg) +1)
+    ax = sns.distplot(neg, bins = bins ,kde=True,kde_kws={"bw":.42}, hist_kws={"rwidth":1}, hist = True, norm_hist = False, label = "Altri documenti")
+    
+    ax.set_xticks(np.arange(0,10,1))
+    # ax = sns.distplot(neg, kde=True, hist = True, norm_hist = False, label = "Altri documenti")
+    ax.set(xlim=(0, 6), ylim=(0,0.5))
+    ax.set(xlabel="Profondità", ylabel = "Densità di probabilità")
     ax.legend()
     # a_plot.set(ylim=(0, 2000))  
     # ax = sns.distplot(pos)

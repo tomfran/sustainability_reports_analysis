@@ -8,8 +8,10 @@ def get_median_pages_count():
         for pdf_file in ["{}/{}".format(pdf_dir, k) for k in sorted(os.listdir(pdf_dir))]:
             try:
                 reader = PdfFileReader(open(pdf_file, 'rb'))
+                if reader.getNumPages() <= 7:
+                    print(pdf_file)
                 ll.append(reader.getNumPages()) 
             except Exception as e:
                 pass
     print(sorted(ll))
-    return 0
+    return(ll[len(ll)//2])
