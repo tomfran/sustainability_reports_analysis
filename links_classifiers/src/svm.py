@@ -26,13 +26,19 @@ def generate_svm(dataset_path = "links_classifiers/data/dataset.csv", load_name 
             "name": "c_{}_{}".format(c, kernel_type).replace('.', '_')
         }
 
-    generate_svm_plot()
+    # generate_svm_plot()
     y_pred = s['svm'].predict(X_test)
     s['score'] = metrics.accuracy_score(y_test, y_pred)
     s['confusion_matrix'] = metrics.confusion_matrix(y_test, y_pred)
-    print(s)
+    s['f1_score'] = 0 
+
+    for m in ['micro', "macro", "weighted", None]:
+        print(metrics.f1_score(y_test, y_pred, average=m))
+        
+    # for k, v in s.items():
+    #     print("{} : {}".format(k, v))
     
-    joblib.dump(s['svm'], "links_classifiers/models/svm/{}.sav".format(s['name']))
+    # joblib.dump(s['svm'], "links_classifiers/models/svm/{}.sav".format(s['name']))
 
 
     return s['svm']

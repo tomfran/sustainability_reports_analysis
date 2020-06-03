@@ -97,6 +97,7 @@ def get_consulting_companies(es, query):
                         cc.append(text_s[k[0]:k[1]])
         if cc:
             ret[h['_id']] = list(set(cc))
+            ret[h['_id']].append(h['_source']['url'])
     return ret
 
 def get_punctual_data(es, query):
@@ -121,3 +122,10 @@ def get_punctual_data(es, query):
                 ret[h['_id']] = cc
 
     return ret
+
+def get_median_pdf_length(es):
+    dd = get_pdf_texts(es, match_all_query)
+    ll = [len([w for w in v.split(" ") if w]) for k, v in dd.items()]
+    ll.sort()
+    return ll
+    return ll[len(ll)//2]

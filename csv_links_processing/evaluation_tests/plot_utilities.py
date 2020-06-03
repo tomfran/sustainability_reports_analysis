@@ -1,6 +1,9 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import norm
+
 
 def get_plot_stats(path):
 
@@ -82,3 +85,27 @@ def generate_plot(stp):
             ax[i].legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
 
+def get_density_depth():
+    pos = []
+    with open("misc/depths_positive.txt") as f:
+        pos = [int(l.replace('\n', '')) for l in f.readlines()]
+    neg = []
+    with open("misc/depths_negative.txt") as f:
+        neg = [int(l.replace('\n', '')) for l in f.readlines()]
+
+    sns.set()
+    bins=np.arange(min(pos), max(pos) +1)
+    fig, ax = plt.subplots(figsize = (10,5))
+    ax = sns.distplot(pos, bins = bins ,kde=True,hist_kws={"rwidth":1}, hist = True, norm_hist = False, label = "Bilanci di sostenibilità")
+    bins=np.arange(min(neg), max(neg) +1)
+    ax = sns.distplot(neg, bins = bins ,kde=True,kde_kws={"bw":.42}, hist_kws={"rwidth":1}, hist = True, norm_hist = False, label = "Altri documenti")
+    
+    ax.set_xticks(np.arange(0,10,1))
+    # ax = sns.distplot(neg, kde=True, hist = True, norm_hist = False, label = "Altri documenti")
+    ax.set(xlim=(0, 6), ylim=(0,0.5))
+    ax.set(xlabel="Profondità", ylabel = "Densità di probabilità")
+    ax.legend()
+    # a_plot.set(ylim=(0, 2000))  
+    # ax = sns.distplot(pos)
+    plt.show()
+    # plt.savefig("csv_links_processing/data/plots/density_plot.png")

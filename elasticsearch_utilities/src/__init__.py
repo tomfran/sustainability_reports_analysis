@@ -1,2 +1,2 @@
-from .population import populate, generate_plot
-from .analysis import analyze
+from .population import *
+from .analysis import *

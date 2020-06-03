@@ -6,37 +6,27 @@ from .utilities import *
 from .queries import *
 from .company_filters import *
 from statistics import mean 
+import pandas as pd
 
-def get_ateco_entities_revenue(es):
-    ma_entities = get_recurrent_entities(es, match_all_query)
-    output_csv(POPULATION_CSV_PATH_NEW + "all/all_entities_frequency.csv", ma_entities, ENTITIES_HD)
-    
-    ma_top_entities = get_recurrent_top_entities(es, match_all_query)
-    output_csv(POPULATION_CSV_PATH_NEW + "all/top_entities_frequency.csv", ma_top_entities, ENTITIES_HD)
-
+def get_ateco_revenue(es):
     ateco_frequency = get_all_ateco(es, match_all_query)
     output_csv(POPULATION_CSV_PATH_NEW + "ateco/ateco_frequency.csv", ateco_frequency, ATECO_HD)
+    
+    data = pd.read_csv("elasticsearch_utilities/stats/ateco_codes.csv")
+    ateco_dict = {row['c']: row['d'] for index, row in data.iterrows()}
 
-    for a, v in ateco_frequency.items():
-        q = set_key(match_ateco_query, "ateco", a)
-        ef = get_recurrent_top_entities(es, q)
-        path = "%s%s%s.csv" %(POPULATION_CSV_PATH_NEW, "ateco/recurrent_entities/", a)
-        output_csv(path, ef, ENTITIES_HD)
-
-    revenue_frequency = get_all_revenues(es, match_all_query)
-    path = POPULATION_CSV_PATH_NEW + "revenue/revenues_frequency.csv"
-    output_csv(path, revenue_frequency, REVENUE_HD)
-
-    SPL_SIZE = 10
-    spl = [k for k,v in revenue_frequency.items()]
-    spl = [(spl[x],spl[min(x+SPL_SIZE, len(spl)-1)]) for x in range(0, len(spl), SPL_SIZE)]
-
-    for s in spl:
-        q = set_key(revenue_range_query, "lte", s[0])
-        q = set_key(revenue_range_query, "gte", s[1])
-        ef = get_recurrent_top_entities(es, q)
-        path = "%s%s%s.csv" %(POPULATION_CSV_PATH_NEW, "revenue/recurrent_entities/", s)
-        output_csv(path, ef, ENTITIES_HD)
+    filt = {}
+    for k, v in ateco_frequency.items():
+        key = k.split(".")[0]
+        if key in filt:
+            filt[key] += v
+        else:
+            filt[key] = v
+    filt = {ateco_dict[k] : v for k, v in sorted(filt.items(), key= lambda x : x[0])}
+    print(json.dumps(filt, indent = 2))
+    # revenue_frequency = get_all_revenues(es, match_all_query)
+    # path = POPULATION_CSV_PATH_NEW + "revenue/revenues_frequency.csv"
+    # output_csv(path, revenue_frequency, REVENUE_HD)
 
 def get_entities_LDA(es):
     ie = get_index_entities(es, match_all_query)
@@ -48,17 +38,16 @@ def get_entities_LDA(es):
     path = "%s%s%s.csv" %(POPULATION_CSV_PATH_NEW, "", "input_top_entities_en")
     output_LDA_input(path, top_e)
 
-
 def test(es):
     print(json.dumps(get_consulting_companies(es, match_all_query), indent=2))
     # print("\n\n")
     # (json.dumps(get_punctual_data(es, match_all_query), indent=2))
-
     
 def analyze():
     es=Elasticsearch([{'host':HOSTNAME,'port':PORT_NUMBER}])
-    # get_ateco_entities_revenue(es)
+    get_ateco_revenue(es)
     # get_entities_LDA(es)
+    # print("Median pdf length: {}".format(get_median_pdf_length(es)))
     test(es)
 if __name__ == "__main__":
     analyze()
