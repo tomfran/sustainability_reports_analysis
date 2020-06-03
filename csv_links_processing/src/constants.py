@@ -13,4 +13,4 @@ NOT_COUNT_SET = set(["ab", "aa", "af", "ak", "sq", "am", "ar", "an", "hy", "as",
 "xh", "yi", "ji", "yo", "za", "zu", "home", "homepage", "index"])
 
 EVALUATION_THRESHOLD = 40
-CLASSIFIER_TSH       = 0.8
+CLASSIFIER_TSH       = 0.9868

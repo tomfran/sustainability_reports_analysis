@@ -36,11 +36,13 @@ def populate(atoka_token, dandelion_token, score_dict, verbose = False):
             pdf_info = score_dict.get(key)
                     
             if pdf_info:
-                d = (pdf_info)
+                d = pdf_info
                 if verbose:
                     print("Getting company")
-                d = get_company(company, atoka_token)
-                if not d and verbose:
+                ci = get_company(company, atoka_token)
+                if ci:
+                    d.update(ci)
+                elif verbose:
                     print("Error getting commpany")
                 # if a company is matched
                 file_path = "%s/%s/%s" %(PDFS_PATH, company, converted_pdf)

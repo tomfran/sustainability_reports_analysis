@@ -31,7 +31,7 @@ def generate_svm(dataset_path = "links_classifiers/data/dataset.csv", load_name 
     s['score'] = metrics.accuracy_score(y_test, y_pred)
     s['confusion_matrix'] = metrics.confusion_matrix(y_test, y_pred)
     s['f1_score'] = 0 
-    
+
     for m in ['micro', "macro", "weighted", None]:
         print(metrics.f1_score(y_test, y_pred, average=m))
         

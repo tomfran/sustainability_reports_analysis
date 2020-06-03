@@ -58,16 +58,6 @@ def evaluate(link):
     # delete not 18 cases checking filename
     if re.match(r'(.*)20[0-2]([0-7]|[9])(.*)', filename) and not re.match(r'(.*)18(.*)', filename):
         score = 0
-
-    if score >= EVALUATION_THRESHOLD and year > 0:
-
-        ff = get_features(filename, anchor, url)
-        ff.append(1)
-        ff = [str(i) for i in ff]
-        with open("dataset_test.txt", "a") as f:
-            f.write("{}\n".format(",".join(ff)))
-
-
     return score >= EVALUATION_THRESHOLD and year > 0, score
     # return score >= EVALUATION_THRESHOLD and "2018" in filename, score, year
     # return score >= EVALUATION_THRESHOLD and ("2018" in anchor), score, year
@@ -75,6 +65,7 @@ def evaluate(link):
     # return score >= EVALUATION_THRESHOLD , score, 0
 
 def evaluate_classifier(link, model):
+    
     """Evaluation function that use a classifier to make the prediction on the 
     usefulness or not of a link.
 
@@ -97,15 +88,6 @@ def evaluate_classifier(link, model):
     # 0 = negative
     cond = pred[1] > pred[0] and max(pred) >= CLASSIFIER_TSH
     score = max(pred)
-
-    # if cond:
-    #     with open("misc/depths_positive.txt", "a") as f:
-    #         f.write("{}\n".format(get_depth(link)))
-    # else:
-    #     with open("misc/depths_negative.txt", "a") as f:
-    #         f.write("{}\n".format(get_depth(link)))
-
-
     return cond, score
 
 def get_depth(l):
@@ -125,13 +107,12 @@ def get_depth(l):
     if ss[-1] == "/":
         ss = ss[:-1]
     # count levels
-    d = ss.count("/") +1
-    k = d
+    levels = {l for l in ss.split("/") if l}
     # remove unnecessary levels (eg: /home /en /it)
-    for i in range(d):
-        if ss[:ss.find("/")] in NOT_COUNT_SET:
-            k -= 1
-        ss = ss[ss.find("/")+1:]
+    k = -1
+    for l in levels:
+        if l not in NOT_COUNT_SET:
+            k += 1
     return k
 
 def get_features(filename, anchor, url):

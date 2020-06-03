@@ -136,19 +136,21 @@ def get_probability_density_plot():
     new = []
     with open("misc/new_links_prob.txt") as f:
         new = [float(l.replace('\n', '')) for l in f.readlines()]
-
-    found = []
-    with open("misc/found_prob.txt") as f:
-        found = [float(l.replace('\n', '')) for l in f.readlines()]
-
-    sns.set()
-    fig, ax = plt.subplots(figsize = (10,6))
-    ax = sns.distplot(new, fit_kws={"color":"green"}, fit=norm, kde=False, hist = False, label = "Nuovi link")
-    ax = sns.distplot(both_neg, fit_kws={"color":"red"}, fit=norm, kde=False, hist = False, label = "Link scartati")
     
+    sns.set()
+    fig, ax = plt.subplots(figsize = (10,7))
+    ax = sns.distplot(new, kde=True, hist = True, norm_hist = False, label = "Nuovi link")
+    ax = sns.distplot(both_neg, kde=True, hist = True, norm_hist = False, label = "Link scartati")
+    
+    plt.axvline(x=0.8, color="black", linestyle=':')
+    plt.text(0.81, 10.5, '0.8 SVM\nthreshold')
+    ax.set_xticks(np.arange(0,1.1,0.1))
+    plt.axvline(x=0.5, color="red", linestyle=':')
+    plt.text(0.32, 10.5, '0.5 threshold\n')
     # ax = sns.distplot(new, label = "Nuovi link")
     # ax = sns.distplot(both_neg, label = "Link scartati")
-    # ax.set(xlim=(0.8, 1))
+    ax.set(xlim=(-0.1, 1.1))
+    ax.set(xlabel="Probabilità SVM", ylabel = "N° sample")
     ax.legend()
     # a_plot.set(ylim=(0, 2000))  
     # ax = sns.distplot(pos)

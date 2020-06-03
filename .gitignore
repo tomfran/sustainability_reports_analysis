@@ -20,7 +20,7 @@ random_forest_links
 tree_links
 svm_links
 misc
-
+.vscode
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
