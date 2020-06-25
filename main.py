@@ -1,8 +1,8 @@
 from csv_links_processing import find_reports, find_reports_classifier, save_stats, get_stats
 from downloader import download
 from pdf_ocr import convert
-from elasticsearch_utilities import elastic_population, analyze
-from utilities import get_score_dictionary
+from elasticsearch_utilities import populate, analyze
+from utilities import *
 from utilities.constants import *
 from links_classifiers import generate_tree, generate_forest, generate_svm
 import json
@@ -32,22 +32,23 @@ def ocr():
 	# ocr the documents to get the texts
 	convert(True)
 
-def elastic(score_dict):
+def elastic(score_dict, tokens):
 	# populate elasticsearch index with converted pdfs 
-	stats = elastic_population(TOKENS_PATH, score_dict, verbose=True)
+	stats = populate(tokens["atoka"], tokens['dandelion'], score_dict, verbose=True)
 	with open("elasticsearch_utilities/stats/population.csv", 'w') as s:
 		s.write(json.dumps(stats, indent = 2))
 
-def an():
+def an(atoka_token):
 	# analyze results elastic
-	analyze()
+	analyze(atoka_token)
 
 def main():
 	# w_l, s = links()
 	# dwl(w_l)
 	# ocr()
-	# elastic(s)
-	an()
+	tok = get_tokens(TOKENS_PATH)
+	# elastic(s, tok)
+	an(tok['atoka'])
 
 if __name__ == "__main__":
 	main()
