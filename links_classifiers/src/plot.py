@@ -127,32 +127,3 @@ def plot_contours(ax, clf, xx, yy, **params):
     Z = Z.reshape(xx.shape)
     out = ax.contourf(xx, yy, Z, **params)
     return out
-
-def get_probability_density_plot():
-    both_neg = []
-    with open("misc/found_both_prob.txt") as f:
-        both_neg = [float(l.replace('\n', '')) for l in f.readlines()]
-    
-    new = []
-    with open("misc/new_links_prob.txt") as f:
-        new = [float(l.replace('\n', '')) for l in f.readlines()]
-    
-    sns.set()
-    fig, ax = plt.subplots(figsize = (10,5))
-    ax = sns.distplot(new, kde=True, hist = True, norm_hist = False, label = "Nuovi link")
-    ax = sns.distplot(both_neg, kde=True, hist = True, norm_hist = False, label = "Link scartati")
-    
-    plt.axvline(x=0.8, color="black", linestyle=':')
-    plt.text(0.81, 10.5, '0.8 SVM\nthreshold')
-    ax.set_xticks(np.arange(0,1.1,0.1))
-    plt.axvline(x=0.5, color="red", linestyle=':')
-    plt.text(0.32, 10.5, '0.5 threshold\n')
-    # ax = sns.distplot(new, label = "Nuovi link")
-    # ax = sns.distplot(both_neg, label = "Link scartati")
-    ax.set(xlim=(-0.1, 1.1))
-    ax.set(xlabel="Probabilità SVM", ylabel = "Densità di probabilità")
-    ax.legend()
-    # a_plot.set(ylim=(0, 2000))  
-    # ax = sns.distplot(pos)
-    # plt.show()
-    plt.savefig("links_classifiers/models/svm/plots/probability_density.png")

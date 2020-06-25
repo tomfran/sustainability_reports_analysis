@@ -2,6 +2,7 @@ import sys
 from .constants import *
 import re
 from sklearn import tree
+import json
 
 def evaluate(link):
     """
@@ -58,6 +59,11 @@ def evaluate(link):
     # delete not 18 cases checking filename
     if re.match(r'(.*)20[0-2]([0-7]|[9])(.*)', filename) and not re.match(r'(.*)18(.*)', filename):
         score = 0
+
+    if "huawei" in link['pdfUrl']:
+        print(json.dumps(link, indent = 2))
+        print(score >= EVALUATION_THRESHOLD and year > 0)
+
     return score >= EVALUATION_THRESHOLD and year > 0, score
     # return score >= EVALUATION_THRESHOLD and "2018" in filename, score, year
     # return score >= EVALUATION_THRESHOLD and ("2018" in anchor), score, year
@@ -88,6 +94,7 @@ def evaluate_classifier(link, model):
     # 0 = negative
     cond = pred[1] > pred[0] and max(pred) >= CLASSIFIER_TSH
     score = max(pred)
+    
     return cond, score
 
 def get_depth(l):
