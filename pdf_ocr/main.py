@@ -1,7 +1,9 @@
 from .src import *
 import os
-import pyocr
-import pyocr.builders
+from pyocr import pyocr
+from pyocr import builders
+# import pyocr
+# import pyocr.builders
 
 def convert(verbose = False):
     tools = pyocr.get_available_tools()[0]
@@ -21,6 +23,7 @@ def convert(verbose = False):
                 # f.write("ERROR: %s\n" %(pdf_file))
                 pass
             counter +=1
+            return
     # f.close()
 
 if __name__ == "__main__":

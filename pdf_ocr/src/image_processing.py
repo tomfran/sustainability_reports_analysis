@@ -75,9 +75,11 @@ def get_paragraph(page, pdf_name, tools):
     sorted_cnts, thresh_adaptive = find_boxes(page_path)
     image = cv2.imread(page_path)
     counter = 1
+    cv2.imwrite("/home/fran/Documents/Documents/normal.jpg", image, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
+
     for c in sorted_cnts:
         x,y,w,h = cv2.boundingRect(c)
-        # cv2.rectangle(image, (x, y), (x + w, y + h), (141,2,31), 1)
+        cv2.rectangle(image, (x, y), (x + w, y + h), (31, 91, 20), 3)
         num = ("0" * (len(str(len(sorted_cnts))) - len(str(counter)))) + str(counter)
         savepath = IMAGES_PATH + pdf_name + '/' + page + '/paragraph_' + num + '.jpeg'
         crop_img = thresh_adaptive[y:y+h, x:x+w]
@@ -85,7 +87,7 @@ def get_paragraph(page, pdf_name, tools):
         
         cv2.imwrite(savepath, crop_img, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
         counter += 1
-    
+    cv2.imwrite("/home/fran/Documents/Documents/rect.jpg", image, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
     os.remove(IMAGES_PATH + pdf_name + '/' + page + "/page.jpeg")
 
     # savepath = IMAGES_PATH + pdf_name + '/' + page + '/cont_' + num + '.jpeg'
@@ -118,7 +120,16 @@ def find_boxes(path):
     cnts = cnts[0] if len(cnts) == 2 else cnts[1]
     # saving paragraphs for later text extraction
     # sorting contours based on up-right bounding rectangle
+    cv2.imwrite("/home/fran/Documents/Documents/thresh.jpg", thresh, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
+    cv2.imwrite("/home/fran/Documents/Documents/dilate.jpg", dilate, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
+
     sorted_cnts = sorted(cnts, key=lambda ctr: cv2.boundingRect(ctr)[0] + cv2.boundingRect(ctr)[1] * image.shape[1])
+    for c in sorted_cnts:
+        x,y,w,h = cv2.boundingRect(c)
+        cv2.rectangle(dilate, (x, y), (x + w, y + h), (255,0,0), 1)
+    cv2.imwrite("/home/fran/Documents/Documents/dilate2.jpg", dilate, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
+
+
     return sorted_cnts, thresh_return
 
 # rotate images if an orientation is detected

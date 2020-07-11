@@ -27,7 +27,8 @@ def generate_svm(dataset_path = "links_classifiers/data/dataset.csv", load_name 
             "name": "c_{}_{}".format(c, kernel_type).replace('.', '_')
         }
 
-
+    print(list(s['svm'].predict_proba(X_test)[:,1]))
+    return
     stp = []
     i = -1
     x = [2, 1, 0.5, 0.1, 0.05, 0.01, 0.05]

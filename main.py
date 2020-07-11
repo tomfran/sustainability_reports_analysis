@@ -45,10 +45,10 @@ def an(atoka_token):
 def main():
 	# w_l, s = links()
 	# dwl(w_l)
-	# ocr()
-	tok = get_tokens(TOKENS_PATH)
+	ocr()
+	# tok = get_tokens(TOKENS_PATH)
 	# elastic(s, tok)
-	an(tok['atoka'])
+	# an(tok['atoka'])
 
 if __name__ == "__main__":
 	main()

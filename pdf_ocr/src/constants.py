@@ -16,7 +16,7 @@ PARAGRAPH_SEPARATOR     = "\n\n"
 # create directory error
 DIRECTORY_ERROR         = "\rCan not create directory to store data.\033[K"
 #rectangle size used in getstructuringelements (higher first value to merge words but not lines)
-MORPH_RECT_SIZE         = (7,5)
+MORPH_RECT_SIZE         = (5,5)
 # max thread spawned in image processing
 MAX_THREAD_NUMBER_IMAGE = 20
 # max thread spawned in text processing
