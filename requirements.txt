@@ -6,7 +6,7 @@ elasticsearch==7.6.0
 wget==3.2
 numpy==1.18.1
 googletrans==2.4.0
-joblib==0.14.1
+joblib==1.1.1
 pyocr==0.7.2
 matplotlib==3.1.2
 pandas==1.0.3
