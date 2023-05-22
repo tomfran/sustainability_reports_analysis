@@ -1,5 +1,5 @@
 langdetect==1.0.8
-requests==2.23.0
+requests==2.31.0
 opencv_python==4.2.0.32
 pdf2image==1.12.1
 elasticsearch==7.6.0
